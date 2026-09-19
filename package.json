@@ -8,7 +8,8 @@
     "build": "cd server && npm install",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
-    "seed": "cd server && npm run seed"
+    "seed": "cd server && npm run seed",
+    "clear-db": "cd server && npm run clear-db"
   },
   "keywords": []
 }
