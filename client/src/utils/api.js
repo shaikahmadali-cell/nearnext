@@ -2,9 +2,15 @@ import axios from 'axios';
 
 const getBaseURL = () => {
   const url = import.meta.env.VITE_API_URL;
-  if (!url) return '/api';
-  const cleanUrl = url.replace(/\/+$/, '');
-  return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+  if (url) {
+    const cleanUrl = url.replace(/\/+$/, '');
+    return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+  }
+  // Auto-fallback to live Render backend when deployed on Vercel or cloud domain
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return 'https://nearnext.onrender.com/api';
+  }
+  return '/api';
 };
 
 const api = axios.create({
