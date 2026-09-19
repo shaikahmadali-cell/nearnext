@@ -13,7 +13,7 @@ dotenv.config();
 
 const seedData = async () => {
   try {
-    const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/local_business_db';
+    const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/local_business_db';
     await mongoose.connect(mongoUri);
     console.log('Connected to MongoDB for Locora Seed...');
 
