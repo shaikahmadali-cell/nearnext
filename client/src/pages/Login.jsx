@@ -130,32 +130,14 @@ const Login = () => {
           <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-subtle)', fontWeight: 700, textAlign: 'center', marginBottom: '0.75rem', letterSpacing: '0.5px' }}>
             ⚡ Quick Test Demo Accounts
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
             <button
               type="button"
-              onClick={() => fillDemo('rahul@example.com', 'Password123')}
+              onClick={() => fillDemo('ahmadali@gmail.com', '123456')}
               className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '0.4rem 0.3rem' }}
+              style={{ fontSize: '0.8rem', padding: '0.5rem 0.75rem', width: '100%', gridColumn: 'span 3', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
             >
-              <User size={13} color="#38bdf8" /> Rahul (User)
+              <ShieldAlert size={14} color="#f59e0b" /> Fill Admin: ahmadali@gmail.com / 123456
             </button>
-            <button
-              type="button"
-              onClick={() => fillDemo('vamsi.business@example.com', 'Password123')}
-              className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '0.4rem 0.3rem' }}
-            >
-              <Store size={13} color="#10b981" /> Vamsi (Owner)
-            </button>
-            <button
-              type="button"
-              onClick={() => fillDemo('admin@example.com', 'Password123')}
-              className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '0.4rem 0.3rem' }}
-            >
-              <ShieldAlert size={13} color="#f59e0b" /> Admin
-            </button>
-          </div>
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
