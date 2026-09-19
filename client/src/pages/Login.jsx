@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Shield, Building2, AlertCircle, ArrowRight, Check, Eye, EyeOff } from 'lucide-react';
+import { Lock, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [selectedRole, setSelectedRole] = useState('admin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -28,24 +27,27 @@ const Login = () => {
     try {
       const user = await login(email, password);
 
-      // Validate account permission for selected role
-      if (selectedRole === 'admin') {
-        if (user.role !== 'admin') {
-          setError('This account does not have Admin privileges. Please select Business or use an Admin account.');
-          return;
-        }
+      if (!user || !user.role) {
+        setError('Account has a missing or invalid role. Please contact support.');
+        return;
+      }
+
+      if (user.role === 'admin') {
         navigate('/admin/dashboard');
-      } else if (selectedRole === 'business') {
-        if (user.role !== 'business') {
-          setError('This account does not have Business privileges. Please select Admin or use a Business account.');
-          return;
-        }
+      } else if (user.role === 'business') {
         navigate('/business/dashboard');
-      } else {
+      } else if (user.role === 'customer') {
         navigate('/customer/dashboard');
+      } else {
+        setError(`Unsupported account role: ${user.role}. Please contact support.`);
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Invalid email or password credentials');
+      const backendMessage = err.response?.data?.message;
+      if (backendMessage && /invalid credentials|invalid email|password/i.test(backendMessage)) {
+        setError('Invalid email or password');
+      } else {
+        setError(backendMessage || err.message || 'Invalid email or password');
+      }
     } finally {
       setLoading(false);
     }
@@ -57,7 +59,7 @@ const Login = () => {
         className="glass-panel animate-fade-in login-card"
         style={{
           width: '100%',
-          maxWidth: '520px',
+          maxWidth: '480px',
           padding: '2.5rem',
           boxShadow: 'var(--shadow-lg)',
         }}
@@ -100,142 +102,6 @@ const Login = () => {
         )}
 
         <form onSubmit={handleSubmit}>
-          {/* Role Selection */}
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label className="form-label" style={{ display: 'block', marginBottom: '0.6rem' }}>
-              Login as
-            </label>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-              gap: '0.75rem'
-            }}>
-              {/* Admin Option */}
-              <button
-                type="button"
-                onClick={() => { setSelectedRole('admin'); setError(''); }}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  padding: '0.9rem',
-                  borderRadius: 'var(--radius-md)',
-                  background: selectedRole === 'admin'
-                    ? 'linear-gradient(135deg, rgba(79, 70, 229, 0.22) 0%, rgba(99, 102, 241, 0.12) 100%)'
-                    : 'rgba(255, 255, 255, 0.03)',
-                  border: selectedRole === 'admin'
-                    ? '1.5px solid #6366f1'
-                    : '1px solid var(--border-glass)',
-                  boxShadow: selectedRole === 'admin'
-                    ? '0 0 20px rgba(99, 102, 241, 0.25)'
-                    : 'none',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all var(--transition-base)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '0.35rem' }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    color: selectedRole === 'admin' ? '#a5b4fc' : 'var(--text-main)',
-                    fontWeight: 700,
-                    fontSize: '0.95rem'
-                  }}>
-                    <Shield size={18} color={selectedRole === 'admin' ? '#818cf8' : 'var(--text-muted)'} />
-                    Admin
-                  </div>
-                  {selectedRole === 'admin' && (
-                    <div style={{
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '50%',
-                      background: '#6366f1',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <Check size={12} color="#fff" strokeWidth={3} />
-                    </div>
-                  )}
-                </div>
-                <p style={{
-                  fontSize: '0.75rem',
-                  color: selectedRole === 'admin' ? '#c7d2fe' : 'var(--text-subtle)',
-                  lineHeight: 1.35,
-                  margin: 0
-                }}>
-                  Manage platform, users, businesses and offers
-                </p>
-              </button>
-
-              {/* Business Option */}
-              <button
-                type="button"
-                onClick={() => { setSelectedRole('business'); setError(''); }}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  padding: '0.9rem',
-                  borderRadius: 'var(--radius-md)',
-                  background: selectedRole === 'business'
-                    ? 'linear-gradient(135deg, rgba(79, 70, 229, 0.22) 0%, rgba(99, 102, 241, 0.12) 100%)'
-                    : 'rgba(255, 255, 255, 0.03)',
-                  border: selectedRole === 'business'
-                    ? '1.5px solid #6366f1'
-                    : '1px solid var(--border-glass)',
-                  boxShadow: selectedRole === 'business'
-                    ? '0 0 20px rgba(99, 102, 241, 0.25)'
-                    : 'none',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all var(--transition-base)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '0.35rem' }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    color: selectedRole === 'business' ? '#a5b4fc' : 'var(--text-main)',
-                    fontWeight: 700,
-                    fontSize: '0.95rem'
-                  }}>
-                    <Building2 size={18} color={selectedRole === 'business' ? '#818cf8' : 'var(--text-muted)'} />
-                    Business
-                  </div>
-                  {selectedRole === 'business' && (
-                    <div style={{
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '50%',
-                      background: '#6366f1',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <Check size={12} color="#fff" strokeWidth={3} />
-                    </div>
-                  )}
-                </div>
-                <p style={{
-                  fontSize: '0.75rem',
-                  color: selectedRole === 'business' ? '#c7d2fe' : 'var(--text-subtle)',
-                  lineHeight: 1.35,
-                  margin: 0
-                }}>
-                  Manage your business, offers and promotions
-                </p>
-              </button>
-            </div>
-          </div>
-
           <div className="form-group">
             <label className="form-label">Email Address</label>
             <input

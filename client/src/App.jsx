@@ -61,7 +61,7 @@ function App() {
             </Route>
 
             {/* Customer Routes (Protected) */}
-            <Route element={<ProtectedRoute allowedRoles={['customer', 'business', 'admin']} />}>
+            <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
               <Route path="/customer/dashboard" element={<CustomerDashboard />} />
               <Route path="/customer/saved" element={<SavedOffers />} />
               <Route path="/customer/enquiries" element={<CustomerEnquiries />} />
