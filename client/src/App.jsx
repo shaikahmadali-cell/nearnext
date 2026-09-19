@@ -38,44 +38,13 @@ import AdminBusinesses from './pages/admin/Businesses';
 import AdminOffers from './pages/admin/Offers';
 import AdminReports from './pages/admin/Reports';
 
-import Galaxy from './components/Galaxy';
-
 function App() {
   return (
     <ToastProvider>
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative' }}>
-        {/* Ambient WebGL Galaxy Background */}
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            zIndex: 0,
-            pointerEvents: 'none',
-            opacity: 0.7,
-            overflow: 'hidden',
-          }}
-          aria-hidden="true"
-        >
-          <Galaxy
-            mouseRepulsion={true}
-            mouseInteraction={true}
-            density={1.3}
-            glowIntensity={0.45}
-            saturation={0.75}
-            hueShift={240}
-            transparent={true}
-            starSpeed={0.35}
-            speed={0.75}
-          />
-        </div>
-
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          <Navbar />
-          
-          <main style={{ flex: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Navbar />
+        
+        <main style={{ flex: 1 }}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
@@ -132,8 +101,7 @@ function App() {
           </Routes>
         </main>
 
-          <Footer />
-        </div>
+        <Footer />
       </div>
     </ToastProvider>
   );

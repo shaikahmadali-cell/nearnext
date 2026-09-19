@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Galaxy from '../components/Galaxy';
 import { Lock, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
@@ -54,14 +55,57 @@ const Login = () => {
   };
 
   return (
-    <div className="container" style={{ minHeight: 'calc(100vh - 180px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3rem 1.5rem' }}>
+    <div
+      style={{
+        position: 'relative',
+        minHeight: 'calc(100vh - 180px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '3rem 1.5rem',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Interactive WebGL Galaxy Background for Login Page Only */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+          pointerEvents: 'none',
+          opacity: 0.85,
+        }}
+        aria-hidden="true"
+      >
+        <Galaxy
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={1.5}
+          glowIntensity={0.5}
+          saturation={0.8}
+          hueShift={240}
+          transparent={true}
+          starSpeed={0.4}
+          speed={0.85}
+        />
+      </div>
+
       <div
         className="glass-panel animate-fade-in login-card"
         style={{
+          position: 'relative',
+          zIndex: 1,
           width: '100%',
           maxWidth: '480px',
           padding: '2.5rem',
-          boxShadow: 'var(--shadow-lg)',
+          background: 'rgba(15, 23, 42, 0.45)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255, 255, 255, 0.12)',
+          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(99, 102, 241, 0.2)',
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
@@ -74,6 +118,7 @@ const Login = () => {
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 1rem',
+            boxShadow: '0 0 20px rgba(79, 70, 229, 0.4)',
           }}>
             <Lock size={22} color="#fff" />
           </div>
@@ -88,13 +133,14 @@ const Login = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'rgba(239, 68, 68, 0.15)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
+            background: 'rgba(239, 68, 68, 0.2)',
+            border: '1px solid rgba(239, 68, 68, 0.4)',
             borderRadius: 'var(--radius-md)',
             padding: '0.75rem 1rem',
             color: '#f87171',
             fontSize: '0.88rem',
             marginBottom: '1.5rem',
+            backdropFilter: 'blur(10px)',
           }}>
             <AlertCircle size={18} style={{ flexShrink: 0 }} />
             <span>{error}</span>
@@ -115,6 +161,10 @@ const Login = () => {
               placeholder="name@example.com"
               className="form-input"
               autoComplete="email"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(8px)',
+              }}
             />
           </div>
 
@@ -132,7 +182,11 @@ const Login = () => {
                 placeholder="••••••••"
                 className="form-input"
                 autoComplete="current-password"
-                style={{ paddingRight: '2.75rem' }}
+                style={{
+                  paddingRight: '2.75rem',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(8px)',
+                }}
               />
               <button
                 type="button"
@@ -162,7 +216,12 @@ const Login = () => {
             type="submit"
             disabled={loading}
             className="btn btn-primary"
-            style={{ width: '100%', marginTop: '0.5rem', padding: '0.85rem' }}
+            style={{
+              width: '100%',
+              marginTop: '0.5rem',
+              padding: '0.85rem',
+              boxShadow: '0 8px 25px rgba(79, 70, 229, 0.35)',
+            }}
           >
             {loading ? 'Signing In...' : 'Sign In'} <ArrowRight size={16} />
           </button>
