@@ -94,18 +94,17 @@ const Login = () => {
       </div>
 
       <div
-        className="glass-panel animate-fade-in login-card"
+        className="animate-fade-in login-card"
         style={{
           position: 'relative',
           zIndex: 1,
           width: '100%',
           maxWidth: '480px',
           padding: '2.5rem',
-          background: 'rgba(15, 23, 42, 0.45)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.12)',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(99, 102, 241, 0.2)',
+          background: 'transparent',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: 'var(--radius-lg)',
+          boxShadow: '0 0 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(99, 102, 241, 0.12)',
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
@@ -118,12 +117,12 @@ const Login = () => {
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 1rem',
-            boxShadow: '0 0 20px rgba(79, 70, 229, 0.4)',
+            boxShadow: '0 0 25px rgba(79, 70, 229, 0.5)',
           }}>
             <Lock size={22} color="#fff" />
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>Welcome Back</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>Welcome Back</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}>
             Sign in to access your discounts, promotions, and dashboard
           </p>
         </div>
@@ -133,14 +132,13 @@ const Login = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'rgba(239, 68, 68, 0.2)',
-            border: '1px solid rgba(239, 68, 68, 0.4)',
+            background: 'rgba(239, 68, 68, 0.25)',
+            border: '1px solid rgba(239, 68, 68, 0.5)',
             borderRadius: 'var(--radius-md)',
             padding: '0.75rem 1rem',
-            color: '#f87171',
+            color: '#fca5a5',
             fontSize: '0.88rem',
             marginBottom: '1.5rem',
-            backdropFilter: 'blur(10px)',
           }}>
             <AlertCircle size={18} style={{ flexShrink: 0 }} />
             <span>{error}</span>
@@ -149,7 +147,7 @@ const Login = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Email Address</label>
+            <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Email Address</label>
             <input
               type="email"
               required
@@ -162,14 +160,14 @@ const Login = () => {
               className="form-input"
               autoComplete="email"
               style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                backdropFilter: 'blur(8px)',
+                background: 'rgba(255, 255, 255, 0.04)',
+                borderColor: 'rgba(255, 255, 255, 0.15)',
               }}
             />
           </div>
 
           <div className="form-group">
-            <label className="form-label">Password</label>
+            <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Password</label>
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -184,8 +182,8 @@ const Login = () => {
                 autoComplete="current-password"
                 style={{
                   paddingRight: '2.75rem',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(8px)',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  borderColor: 'rgba(255, 255, 255, 0.15)',
                 }}
               />
               <button
@@ -220,16 +218,16 @@ const Login = () => {
               width: '100%',
               marginTop: '0.5rem',
               padding: '0.85rem',
-              boxShadow: '0 8px 25px rgba(79, 70, 229, 0.35)',
+              boxShadow: '0 8px 25px rgba(79, 70, 229, 0.4)',
             }}
           >
             {loading ? 'Signing In...' : 'Sign In'} <ArrowRight size={16} />
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '1.75rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+        <div style={{ textAlign: 'center', marginTop: '1.75rem', fontSize: '0.9rem', color: 'var(--text-muted)', textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>
           Don't have an account?{' '}
-          <Link to="/register" style={{ color: '#818cf8', fontWeight: 600 }}>
+          <Link to="/register" style={{ color: '#a5b4fc', fontWeight: 600 }}>
             Sign up free
           </Link>
         </div>
