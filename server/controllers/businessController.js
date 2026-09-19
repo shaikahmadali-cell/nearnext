@@ -111,9 +111,11 @@ const createOrUpdateBusiness = async (req, res, next) => {
   try {
     let business = await Business.findOne({ owner: req.user.id });
 
+    // When created or edited by a merchant, it requires admin approval
     const businessData = {
       ...req.body,
       owner: req.user.id,
+      status: req.user.role === 'admin' ? (req.body.status || 'approved') : 'pending',
     };
 
     if (business) {
@@ -123,7 +125,7 @@ const createOrUpdateBusiness = async (req, res, next) => {
       });
       return res.json({
         success: true,
-        message: 'Business profile updated successfully',
+        message: 'Business profile updated and submitted to admin for approval.',
         data: business,
       });
     }
@@ -131,7 +133,7 @@ const createOrUpdateBusiness = async (req, res, next) => {
     business = await Business.create(businessData);
     res.status(201).json({
       success: true,
-      message: 'Business profile created successfully',
+      message: 'Business profile submitted successfully. It is now requesting admin approval.',
       data: business,
     });
   } catch (error) {

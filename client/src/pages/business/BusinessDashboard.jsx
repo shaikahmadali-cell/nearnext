@@ -102,7 +102,22 @@ const BusinessDashboard = () => {
         }}
       >
         <div>
-          <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>Merchant Hub</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+            <span className="badge badge-primary">Merchant Hub</span>
+            {business && (
+              <>
+                {business.status === 'pending' && (
+                  <span className="badge badge-warning">⏳ Pending Admin Approval (Requesting)</span>
+                )}
+                {business.status === 'approved' && (
+                  <span className="badge badge-success">✓ Approved & Live</span>
+                )}
+                {business.status === 'rejected' && (
+                  <span className="badge badge-danger">✕ Rejected by Admin</span>
+                )}
+              </>
+            )}
+          </div>
           <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.4rem' }}>
             {business ? business.name : `Welcome, ${user?.name}`}
           </h1>

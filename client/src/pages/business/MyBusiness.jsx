@@ -37,6 +37,7 @@ const MyBusiness = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
+  const [businessStatus, setBusinessStatus] = useState(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -44,6 +45,7 @@ const MyBusiness = () => {
         setLoading(true);
         const res = await businessService.getMyBusiness();
         if (res.success && res.data) {
+          setBusinessStatus(res.data.status);
           setFormData({
             name: res.data.name || '',
             category: res.data.category || 'Dining & Cafes',
@@ -100,13 +102,57 @@ const MyBusiness = () => {
         <Link to="/business/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-muted)', marginBottom: '0.75rem', fontSize: '0.88rem' }}>
           <ArrowLeft size={16} /> Back to Dashboard
         </Link>
-        <h1 style={{ fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <Store size={28} color="#4f46e5" /> Manage Business Profile
-        </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-          Update store location, category, contact info, operating hours, and media.
-        </p>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <h1 style={{ fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.25rem' }}>
+              <Store size={28} color="#4f46e5" /> Manage Business Profile
+            </h1>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+              Update store location, category, contact info, operating hours, and media.
+            </p>
+          </div>
+          {businessStatus && (
+            <div>
+              {businessStatus === 'pending' && (
+                <span className="badge badge-warning" style={{ fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}>
+                  ⏳ Pending Admin Approval (Requesting)
+                </span>
+              )}
+              {businessStatus === 'approved' && (
+                <span className="badge badge-success" style={{ fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}>
+                  ✓ Approved & Live
+                </span>
+              )}
+              {businessStatus === 'rejected' && (
+                <span className="badge badge-danger" style={{ fontSize: '0.85rem', padding: '0.4rem 0.8rem' }}>
+                  ✕ Rejected by Admin
+                </span>
+              )}
+            </div>
+          )}
+        </div>
       </div>
+
+      {businessStatus === 'pending' && (
+        <div style={{
+          maxWidth: '800px',
+          margin: '0 auto 1.5rem',
+          padding: '1rem 1.25rem',
+          borderRadius: 'var(--radius-md)',
+          background: 'rgba(245, 158, 11, 0.12)',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
+          color: '#fbbf24',
+          fontSize: '0.9rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+        }}>
+          <AlertCircle size={20} style={{ flexShrink: 0 }} />
+          <div>
+            <strong>Under Admin Review:</strong> Your business profile has been submitted to the admin for verification. It will appear on the public directory once accepted.
+          </div>
+        </div>
+      )}
 
       {message.text && (
         <div style={{
