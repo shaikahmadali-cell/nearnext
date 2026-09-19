@@ -247,14 +247,29 @@ const CreateOffer = () => {
           />
         </div>
 
+        <div style={{
+          marginBottom: '1.5rem',
+          padding: '1rem',
+          borderRadius: 'var(--radius-md)',
+          background: 'rgba(245, 158, 11, 0.1)',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
+          color: '#fbbf24',
+          fontSize: '0.88rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.65rem',
+        }}>
+          <span>ℹ️ <strong>Admin Review Required:</strong> Newly published promotions will be submitted for Admin approval before appearing publicly to customers.</span>
+        </div>
+
         <button
           type="submit"
           disabled={loading}
           className="btn btn-primary btn-lg"
-          style={{ width: '100%', marginTop: '1.5rem' }}
+          style={{ width: '100%', marginTop: '0.5rem' }}
         >
           <PlusCircle size={18} />
-          {loading ? 'Creating Promotion...' : 'Publish Promotion Live'}
+          {loading ? 'Submitting...' : 'Submit for Admin Approval'}
         </button>
       </form>
 

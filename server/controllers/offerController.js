@@ -3,13 +3,13 @@ const Business = require('../models/Business');
 const SavedOffer = require('../models/SavedOffer');
 const User = require('../models/User');
 
-// @desc    Get all active offers with search, filters
+// @desc    Get all active/approved offers with search, filters
 // @route   GET /api/offers
 // @access  Public
 const getOffers = async (req, res, next) => {
   try {
     const { search, category, discountType, sort, featured } = req.query;
-    const query = { status: 'active' };
+    const query = { status: { $in: ['approved', 'active'] } };
 
     if (search) {
       query.$or = [
@@ -79,7 +79,7 @@ const getOfferById = async (req, res, next) => {
   }
 };
 
-// @desc    Get business's own offers
+// @desc    Get business's own offers (including pending & rejected)
 // @route   GET /api/offers/my/all
 // @access  Private (Business only)
 const getMyOffers = async (req, res, next) => {
@@ -105,7 +105,7 @@ const getMyOffers = async (req, res, next) => {
   }
 };
 
-// @desc    Create new offer
+// @desc    Create new offer (Requires Admin approval if submitted by business)
 // @route   POST /api/offers
 // @access  Private (Business only)
 const createOffer = async (req, res, next) => {
@@ -119,15 +119,20 @@ const createOffer = async (req, res, next) => {
       });
     }
 
+    const initialStatus = req.user.role === 'admin' ? (req.body.status || 'approved') : 'pending';
+
     const offer = await Offer.create({
       ...req.body,
       business: business._id,
       category: req.body.category || business.category,
+      status: initialStatus,
     });
 
     res.status(201).json({
       success: true,
-      message: 'Promotion created successfully',
+      message: initialStatus === 'pending'
+        ? 'Promotion submitted successfully. It will go live once approved by the Admin.'
+        : 'Promotion created successfully and is now active.',
       data: offer,
     });
   } catch (error) {
@@ -146,6 +151,8 @@ const updateOffer = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Offer not found' });
     }
 
+    const updateData = { ...req.body };
+
     if (req.user.role !== 'admin') {
       const business = await Business.findOne({ owner: req.user.id });
       if (!business || offer.business.toString() !== business._id.toString()) {
@@ -154,16 +161,51 @@ const updateOffer = async (req, res, next) => {
           message: 'Not authorized to edit this offer',
         });
       }
+      // Re-require admin approval when modified by merchant
+      updateData.status = 'pending';
     }
 
-    offer = await Offer.findByIdAndUpdate(req.params.id, req.body, {
+    offer = await Offer.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
       runValidators: true,
     });
 
     res.json({
       success: true,
-      message: 'Offer updated successfully',
+      message: req.user.role !== 'admin'
+        ? 'Offer updated and submitted to Admin for re-approval.'
+        : 'Offer updated successfully.',
+      data: offer,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Admin: Update offer status (approve/reject/pending/expired)
+// @route   PUT /api/offers/:id/status
+// @access  Private (Admin only)
+const updateOfferStatus = async (req, res, next) => {
+  try {
+    const { status, isFeatured } = req.body;
+    const updateFields = {};
+
+    if (status) updateFields.status = status;
+    if (typeof isFeatured === 'boolean') updateFields.isFeatured = isFeatured;
+
+    const offer = await Offer.findByIdAndUpdate(
+      req.params.id,
+      updateFields,
+      { new: true }
+    ).populate('business', 'name city state category');
+
+    if (!offer) {
+      return res.status(404).json({ success: false, message: 'Offer not found' });
+    }
+
+    res.json({
+      success: true,
+      message: `Offer status updated to ${offer.status}`,
       data: offer,
     });
   } catch (error) {
@@ -294,6 +336,7 @@ module.exports = {
   getMyOffers,
   createOffer,
   updateOffer,
+  updateOfferStatus,
   deleteOffer,
   toggleSaveOffer,
   getSavedOffers,

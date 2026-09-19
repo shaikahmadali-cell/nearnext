@@ -29,7 +29,8 @@ const getBusinessAnalytics = async (req, res, next) => {
     const enquiries = await Enquiry.find({ business: business._id });
 
     const totalOffers = offers.length;
-    const activeOffers = offers.filter((o) => o.status === 'active').length;
+    const activeOffers = offers.filter((o) => o.status === 'approved' || o.status === 'active').length;
+    const pendingOffers = offers.filter((o) => o.status === 'pending').length;
     const totalViews = offers.reduce((acc, curr) => acc + (curr.viewsCount || 0), 0);
     const totalSaves = offers.reduce((acc, curr) => acc + (curr.savesCount || 0), 0);
     const totalEnquiries = enquiries.length;
@@ -53,6 +54,7 @@ const getBusinessAnalytics = async (req, res, next) => {
         businessName: business.name,
         totalOffers,
         activeOffers,
+        pendingOffers,
         totalViews,
         totalSaves,
         totalEnquiries,
@@ -80,7 +82,8 @@ const getAdminAnalytics = async (req, res, next) => {
     const pendingBusinesses = await Business.countDocuments({ status: 'pending' });
     
     const totalOffers = await Offer.countDocuments();
-    const activeOffers = await Offer.countDocuments({ status: 'active' });
+    const activeOffers = await Offer.countDocuments({ status: { $in: ['approved', 'active'] } });
+    const pendingOffers = await Offer.countDocuments({ status: 'pending' });
     const totalEnquiries = await Enquiry.countDocuments();
 
     // Group businesses by category
@@ -114,6 +117,7 @@ const getAdminAnalytics = async (req, res, next) => {
         pendingBusinesses,
         totalOffers,
         activeOffers,
+        pendingOffers,
         totalEnquiries,
         totalViews,
         totalSaves,

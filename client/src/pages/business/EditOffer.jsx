@@ -266,14 +266,29 @@ const EditOffer = () => {
           />
         </div>
 
+        <div style={{
+          marginBottom: '1.5rem',
+          padding: '1rem',
+          borderRadius: 'var(--radius-md)',
+          background: 'rgba(245, 158, 11, 0.1)',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
+          color: '#fbbf24',
+          fontSize: '0.88rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.65rem',
+        }}>
+          <span>ℹ️ <strong>Note:</strong> Updating offer details will resubmit this promotion for Admin review.</span>
+        </div>
+
         <button
           type="submit"
           disabled={saving}
           className="btn btn-primary btn-lg"
-          style={{ width: '100%', marginTop: '1.5rem' }}
+          style={{ width: '100%', marginTop: '0.5rem' }}
         >
           <Save size={18} />
-          {saving ? 'Updating...' : 'Save Changes'}
+          {saving ? 'Updating...' : 'Save & Submit for Approval'}
         </button>
       </form>
 

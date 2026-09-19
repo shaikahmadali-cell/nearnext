@@ -6,6 +6,7 @@ const {
   getMyOffers,
   createOffer,
   updateOffer,
+  updateOfferStatus,
   deleteOffer,
   toggleSaveOffer,
   getSavedOffers,
@@ -21,6 +22,7 @@ router.get('/customer/saved', protect, getSavedOffers);
 router.post('/:id/save', protect, toggleSaveOffer);
 router.get('/admin/all', protect, authorize('admin'), adminGetAllOffers);
 router.get('/:id', getOfferById);
+router.put('/:id/status', protect, authorize('admin'), updateOfferStatus);
 router.put('/:id', protect, authorize('business', 'admin'), updateOffer);
 router.delete('/:id', protect, authorize('business', 'admin'), deleteOffer);
 

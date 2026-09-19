@@ -140,9 +140,31 @@ const MyOffers = () => {
                     </td>
 
                     <td>
-                      <span className={`badge ${offer.status === 'active' ? 'badge-success' : 'badge-danger'}`}>
-                        {offer.status}
-                      </span>
+                      {offer.status === 'pending' && (
+                        <span className="badge badge-warning">
+                          ⏳ Pending Approval
+                        </span>
+                      )}
+                      {(offer.status === 'approved' || offer.status === 'active') && (
+                        <span className="badge badge-success">
+                          ✓ Live & Approved
+                        </span>
+                      )}
+                      {offer.status === 'rejected' && (
+                        <span className="badge badge-danger">
+                          ✕ Rejected by Admin
+                        </span>
+                      )}
+                      {offer.status === 'expired' && (
+                        <span className="badge badge-secondary">
+                          ⏰ Expired
+                        </span>
+                      )}
+                      {offer.status === 'draft' && (
+                        <span className="badge badge-secondary">
+                          Draft
+                        </span>
+                      )}
                     </td>
 
                     <td>

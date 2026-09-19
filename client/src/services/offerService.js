@@ -21,6 +21,10 @@ export const offerService = {
     const { data } = await api.put(`/offers/${id}`, offerData);
     return data;
   },
+  updateOfferStatus: async (id, statusData) => {
+    const { data } = await api.put(`/offers/${id}/status`, statusData);
+    return data;
+  },
   deleteOffer: async (id) => {
     const { data } = await api.delete(`/offers/${id}`);
     return data;
