@@ -269,7 +269,7 @@ const BusinessDetails = () => {
         </div>
 
         {/* Content Layout */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
+        <div className="business-details-grid">
           
           {/* Left Column: Active Promotions, Bio & Reviews */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
@@ -574,6 +574,20 @@ const BusinessDetails = () => {
 
       </div>
 
+      <style>{`
+        .business-details-grid {
+          display: grid;
+          grid-template-columns: 1.25fr 0.75fr;
+          gap: 2.5rem;
+          align-items: start;
+        }
+        @media (max-width: 960px) {
+          .business-details-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };

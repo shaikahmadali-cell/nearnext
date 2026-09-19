@@ -68,7 +68,7 @@ function App() {
             </Route>
 
             {/* Business Owner Routes (Protected) */}
-            <Route element={<ProtectedRoute allowedRoles={['business', 'admin']} />}>
+            <Route element={<ProtectedRoute allowedRoles={['business']} />}>
               <Route path="/business/dashboard" element={<BusinessDashboard />} />
               <Route path="/business/profile" element={<MyBusiness />} />
               <Route path="/business/create-offer" element={<CreateOffer />} />

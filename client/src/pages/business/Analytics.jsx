@@ -109,7 +109,7 @@ const Analytics = () => {
       </div>
 
       {/* Two Column Layout for Breakdown & Top Deals */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
+      <div className="grid-cols-2">
         
         {/* Lead Status Breakdown */}
         <div className="glass-panel" style={{ padding: '2rem' }}>

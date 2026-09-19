@@ -81,18 +81,18 @@ const Profile = () => {
   ];
 
   return (
-    <div className="container" style={{ padding: '3rem 1.5rem 6rem', maxWidth: '850px' }}>
+    <div className="container" style={{ padding: '3rem 1.5rem 6rem', maxWidth: '850px', width: '100%' }}>
       
       {/* Header Banner */}
       <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-          <div style={{ position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+          <div style={{ position: 'relative', flexShrink: 0 }}>
             <img
               src={avatar || user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200'}
               alt={user?.name}
               style={{
-                width: '90px',
-                height: '90px',
+                width: '80px',
+                height: '80px',
                 borderRadius: '50%',
                 objectFit: 'cover',
                 border: '3px solid #6366f1',
@@ -100,20 +100,20 @@ const Profile = () => {
               }}
             />
           </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.25rem' }}>
-              <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>{user?.name}</h1>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.25rem', flexWrap: 'wrap' }}>
+              <h1 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.75rem)', fontWeight: 800 }}>{user?.name}</h1>
               <span className={`badge ${user?.role === 'admin' ? 'badge-danger' : user?.role === 'business' ? 'badge-primary' : 'badge-success'}`}>
                 {user?.role?.toUpperCase()}
               </span>
             </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{user?.email}</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', wordBreak: 'break-all' }}>{user?.email}</p>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.75rem' }}>
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.75rem', flexWrap: 'wrap' }}>
         <button
           onClick={() => setActiveTab('general')}
           className={`btn ${activeTab === 'general' ? 'btn-primary' : 'btn-secondary'} btn-sm`}
@@ -135,53 +135,53 @@ const Profile = () => {
             <User size={20} color="#818cf8" /> Account Information
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div className="form-group">
+              <label className="form-label">
                 Full Name
               </label>
               <input
                 type="text"
-                className="input-field"
+                className="form-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+            <div className="form-group">
+              <label className="form-label">
                 Email Address (Read-only)
               </label>
               <input
                 type="email"
-                className="input-field"
+                className="form-input"
                 value={user?.email || ''}
                 disabled
                 style={{ opacity: 0.6, cursor: 'not-allowed' }}
               />
             </div>
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+            <div className="form-group">
+              <label className="form-label">
                 Phone Number
               </label>
               <input
                 type="tel"
-                className="input-field"
+                className="form-input"
                 placeholder="+1 555-0123"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
             </div>
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+            <div className="form-group">
+              <label className="form-label">
                 Avatar Image URL
               </label>
               <input
                 type="url"
-                className="input-field"
+                className="form-input"
                 placeholder="https://images.unsplash.com/..."
                 value={avatar}
                 onChange={(e) => setAvatar(e.target.value)}
@@ -212,7 +212,7 @@ const Profile = () => {
               </div>
             </div>
 
-            <div style={{ marginTop: '1rem' }}>
+            <div style={{ marginTop: '0.75rem' }}>
               <button type="submit" className="btn btn-primary" disabled={saving}>
                 <Save size={16} /> {saving ? 'Saving Changes...' : 'Save Profile Details'}
               </button>
@@ -228,14 +228,14 @@ const Profile = () => {
             <Lock size={20} color="#818cf8" /> Change Account Password
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div className="form-group">
+              <label className="form-label">
                 New Password (minimum 6 characters)
               </label>
               <input
                 type="password"
-                className="input-field"
+                className="form-input"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -243,13 +243,13 @@ const Profile = () => {
               />
             </div>
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+            <div className="form-group">
+              <label className="form-label">
                 Confirm New Password
               </label>
               <input
                 type="password"
-                className="input-field"
+                className="form-input"
                 placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -257,7 +257,7 @@ const Profile = () => {
               />
             </div>
 
-            <div style={{ marginTop: '1rem' }}>
+            <div style={{ marginTop: '0.75rem' }}>
               <button type="submit" className="btn btn-primary" disabled={saving}>
                 <Lock size={16} /> {saving ? 'Updating Password...' : 'Update Password'}
               </button>

@@ -7,17 +7,21 @@ const Footer = () => {
     <footer style={{
       background: '#070a12',
       borderTop: '1px solid var(--border-glass)',
-      paddingTop: '4rem',
+      paddingTop: '3.5rem',
       paddingBottom: '2.5rem',
       marginTop: 'auto',
+      width: '100%',
     }}>
       <div className="container">
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '2.5rem',
-          marginBottom: '3.5rem',
-        }}>
+        <div
+          className="footer-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '2.5rem',
+            marginBottom: '3rem',
+          }}
+        >
           
           {/* Col 1: Brand Info */}
           <div>
@@ -30,6 +34,7 @@ const Footer = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                flexShrink: 0,
               }}>
                 <Store size={20} color="#ffffff" />
               </div>
@@ -100,14 +105,14 @@ const Footer = () => {
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '1rem' }}>
               Get weekly curated deals from top-rated shops in your neighborhood.
             </p>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               <input
                 type="email"
                 placeholder="Enter your email"
                 className="form-input"
-                style={{ fontSize: '0.85rem', padding: '0.6rem 0.85rem' }}
+                style={{ fontSize: '0.85rem', padding: '0.6rem 0.85rem', flex: '1 1 160px', minWidth: 0 }}
               />
-              <button className="btn btn-primary btn-sm">Join</button>
+              <button className="btn btn-primary btn-sm" style={{ flexShrink: 0 }}>Join</button>
             </div>
           </div>
         </div>
@@ -130,6 +135,15 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .footer-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 };

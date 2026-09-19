@@ -15,6 +15,7 @@ const SearchBar = ({ onSearch, initialQuery = '', initialLocation = '', placehol
   return (
     <form
       onSubmit={handleSubmit}
+      className="search-bar-form"
       style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -27,10 +28,21 @@ const SearchBar = ({ onSearch, initialQuery = '', initialLocation = '', placehol
         boxShadow: 'var(--shadow-lg)',
         gap: '0.5rem',
         width: '100%',
+        maxWidth: '100%',
       }}
     >
       {/* Keyword input */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: '2 1 240px', padding: '0.5rem 0.85rem' }}>
+      <div
+        className="search-input-group"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          flex: '2 1 200px',
+          padding: '0.5rem 0.85rem',
+          minWidth: 0,
+        }}
+      >
         <Search size={20} color="#818cf8" style={{ flexShrink: 0 }} />
         <input
           type="text"
@@ -41,9 +53,10 @@ const SearchBar = ({ onSearch, initialQuery = '', initialLocation = '', placehol
             background: 'transparent',
             border: 'none',
             color: 'var(--text-main)',
-            fontSize: '1rem',
+            fontSize: '0.95rem',
             width: '100%',
             outline: 'none',
+            minWidth: 0,
           }}
         />
       </div>
@@ -52,20 +65,31 @@ const SearchBar = ({ onSearch, initialQuery = '', initialLocation = '', placehol
       <div style={{ width: '1px', height: '32px', background: 'rgba(255, 255, 255, 0.1)', display: 'none' }} className="search-divider" />
 
       {/* Location input */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: '1 1 180px', padding: '0.5rem 0.85rem' }}>
+      <div
+        className="search-input-group"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          flex: '1 1 150px',
+          padding: '0.5rem 0.85rem',
+          minWidth: 0,
+        }}
+      >
         <MapPin size={20} color="#f43f5e" style={{ flexShrink: 0 }} />
         <input
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          placeholder="City or Zip (e.g. Austin)"
+          placeholder="City or Zip"
           style={{
             background: 'transparent',
             border: 'none',
             color: 'var(--text-main)',
-            fontSize: '1rem',
+            fontSize: '0.95rem',
             width: '100%',
             outline: 'none',
+            minWidth: 0,
           }}
         />
       </div>
@@ -73,7 +97,7 @@ const SearchBar = ({ onSearch, initialQuery = '', initialLocation = '', placehol
       {/* Search Action Button */}
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn btn-primary search-submit-btn"
         style={{
           borderRadius: 'var(--radius-md)',
           padding: '0.75rem 1.6rem',
@@ -88,6 +112,17 @@ const SearchBar = ({ onSearch, initialQuery = '', initialLocation = '', placehol
       <style>{`
         @media (min-width: 640px) {
           .search-divider { display: block !important; }
+        }
+        @media (max-width: 639px) {
+          .search-submit-btn {
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-top: 0.25rem !important;
+          }
+          .search-input-group {
+            flex: 1 1 100% !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          }
         }
       `}</style>
     </form>

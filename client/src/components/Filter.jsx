@@ -1,5 +1,6 @@
 import React from 'react';
 import { Filter as FilterIcon, Sparkles } from 'lucide-react';
+
 const CATEGORIES = [
   'All',
   'Dining & Cafes',
@@ -13,17 +14,22 @@ const CATEGORIES = [
 
 const Filter = ({ selectedCategory, onSelectCategory, selectedSort, onSelectSort, discountType, onSelectDiscountType }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2rem', width: '100%', maxWidth: '100%' }}>
       
       {/* Category Pills Slider */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.65rem',
-        overflowX: 'auto',
-        paddingBottom: '0.5rem',
-        scrollbarWidth: 'none',
-      }}>
+      <div
+        className="no-scrollbar"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.65rem',
+          overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch',
+          paddingBottom: '0.5rem',
+          width: '100%',
+          maxWidth: '100%',
+        }}
+      >
         {CATEGORIES.map((cat) => {
           const isActive = selectedCategory === cat;
           return (
@@ -44,6 +50,7 @@ const Filter = ({ selectedCategory, onSelectCategory, selectedSort, onSelectSort
                 whiteSpace: 'nowrap',
                 transition: 'all var(--transition-fast)',
                 boxShadow: isActive ? '0 4px 12px rgba(79, 70, 229, 0.35)' : 'none',
+                flexShrink: 0,
               }}
             >
               {cat === 'All' && <Sparkles size={13} style={{ display: 'inline', marginRight: '4px' }} />}
@@ -54,24 +61,28 @@ const Filter = ({ selectedCategory, onSelectCategory, selectedSort, onSelectSort
       </div>
 
       {/* Secondary Sort & Discount Type filters */}
-      <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '1rem',
-        paddingTop: '0.75rem',
-        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-      }}>
+      <div
+        className="secondary-filters"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '0.85rem',
+          paddingTop: '0.75rem',
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          width: '100%',
+        }}
+      >
         {/* Discount Type */}
         {onSelectDiscountType && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Discount:</span>
+          <div className="filter-select-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>Discount:</span>
             <select
               value={discountType || 'All'}
               onChange={(e) => onSelectDiscountType(e.target.value)}
               className="form-select"
-              style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', width: 'auto' }}
+              style={{ padding: '0.45rem 0.85rem', fontSize: '0.85rem', width: 'auto', minWidth: '130px' }}
             >
               <option value="All">All Types</option>
               <option value="percentage">Percentage (%)</option>
@@ -84,13 +95,13 @@ const Filter = ({ selectedCategory, onSelectCategory, selectedSort, onSelectSort
 
         {/* Sort */}
         {onSelectSort && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: 'auto' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Sort by:</span>
+          <div className="filter-select-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: 'auto' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>Sort by:</span>
             <select
               value={selectedSort || 'newest'}
               onChange={(e) => onSelectSort(e.target.value)}
               className="form-select"
-              style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', width: 'auto' }}
+              style={{ padding: '0.45rem 0.85rem', fontSize: '0.85rem', width: 'auto', minWidth: '130px' }}
             >
               <option value="newest">Newest First</option>
               <option value="popular">Most Popular</option>
@@ -100,6 +111,23 @@ const Filter = ({ selectedCategory, onSelectCategory, selectedSort, onSelectSort
           </div>
         )}
       </div>
+
+      <style>{`
+        @media (max-width: 540px) {
+          .secondary-filters {
+            flex-direction: column;
+            align-items: stretch !important;
+          }
+          .filter-select-group {
+            margin-left: 0 !important;
+            justify-content: space-between;
+            width: 100%;
+          }
+          .filter-select-group select {
+            flex: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 };

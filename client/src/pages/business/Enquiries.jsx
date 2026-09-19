@@ -94,7 +94,7 @@ const BusinessEnquiries = () => {
           </p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', alignItems: 'start' }}>
+        <div className="inbox-grid">
           
           {/* List Column */}
           <div className="glass-panel" style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '640px', overflowY: 'auto' }}>
@@ -231,12 +231,25 @@ const BusinessEnquiries = () => {
                 </button>
               </form>
 
-            </div>
+          </div>
           )}
 
         </div>
       )}
 
+      <style>{`
+        .inbox-grid {
+          display: grid;
+          grid-template-columns: 340px 1fr;
+          gap: 1.5rem;
+          align-items: start;
+        }
+        @media (max-width: 860px) {
+          .inbox-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
     </div>
   );
 };

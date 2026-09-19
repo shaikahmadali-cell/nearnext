@@ -176,7 +176,7 @@ const OfferDetails = () => {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'start' }}>
+      <div className="offer-details-grid">
         
         {/* Left Column: Image & Details */}
         <div>
@@ -192,7 +192,7 @@ const OfferDetails = () => {
             <img
               src={offer.bannerImage || 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1000'}
               alt={offer.title}
-              style={{ width: '100%', height: '360px', objectFit: 'cover' }}
+              style={{ width: '100%', height: 'clamp(220px, 35vw, 360px)', objectFit: 'cover' }}
             />
             <div style={{
               position: 'absolute',
@@ -547,6 +547,20 @@ const OfferDetails = () => {
         </div>
       )}
 
+      <style>{`
+        .offer-details-grid {
+          display: grid;
+          grid-template-columns: 1.15fr 0.85fr;
+          gap: 2.5rem;
+          align-items: start;
+        }
+        @media (max-width: 900px) {
+          .offer-details-grid {
+            grid-template-columns: 1fr;
+            gap: 1.75rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };
