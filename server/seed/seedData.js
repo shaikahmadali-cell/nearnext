@@ -8,8 +8,8 @@ const Offer = require('../models/Offer');
 const Enquiry = require('../models/Enquiry');
 const SavedOffer = require('../models/SavedOffer');
 const Review = require('../models/Review');
-
-dotenv.config();
+const path = require('path');
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const seedData = async () => {
   try {

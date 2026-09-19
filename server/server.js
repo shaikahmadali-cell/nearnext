@@ -7,7 +7,7 @@ const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorMiddleware');
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 // Connect to MongoDB
 connectDB();
