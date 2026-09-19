@@ -6,10 +6,14 @@
   "scripts": {
     "start": "node server/server.js",
     "build": "cd server && npm install",
+    "dev": "concurrently --kill-others -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
     "seed": "cd server && npm run seed",
     "clear-db": "cd server && npm run clear-db"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
 }
