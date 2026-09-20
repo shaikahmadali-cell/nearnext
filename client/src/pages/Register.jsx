@@ -79,10 +79,6 @@ const Register = () => {
           width: '100%',
           maxWidth: '540px',
           padding: '2.5rem',
-          background: 'transparent',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: 'var(--radius-lg)',
-          boxShadow: '0 0 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(99, 102, 241, 0.12)',
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -99,8 +95,8 @@ const Register = () => {
           }}>
             <UserPlus size={22} color="#fff" />
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>Create an Account</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-main)' }}>Create an Account</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             Join NearNest to claim deals or promote your business
           </p>
         </div>
@@ -110,11 +106,11 @@ const Register = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'rgba(239, 68, 68, 0.25)',
-            border: '1px solid rgba(239, 68, 68, 0.5)',
+            background: 'var(--danger-light, rgba(239, 68, 68, 0.15))',
+            border: '1px solid rgba(239, 68, 68, 0.4)',
             borderRadius: 'var(--radius-md)',
             padding: '0.75rem 1rem',
-            color: '#fca5a5',
+            color: '#ef4444',
             fontSize: '0.88rem',
             marginBottom: '1.5rem',
           }}>
@@ -126,7 +122,7 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           {/* Account Role Selector */}
           <div style={{ marginBottom: '1.5rem' }}>
-            <label className="form-label" style={{ marginBottom: '0.75rem', display: 'block', textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>I want to:</label>
+            <label className="form-label" style={{ marginBottom: '0.75rem', display: 'block' }}>I want to:</label>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
               <button
                 type="button"
@@ -138,16 +134,16 @@ const Register = () => {
                   gap: '0.5rem',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  background: formData.role === 'customer' ? 'rgba(79, 70, 229, 0.25)' : 'rgba(255, 255, 255, 0.04)',
-                  border: formData.role === 'customer' ? '2px solid #4f46e5' : '1px solid rgba(255, 255, 255, 0.12)',
-                  color: formData.role === 'customer' ? '#fff' : 'var(--text-muted)',
+                  background: formData.role === 'customer' ? 'rgba(79, 70, 229, 0.25)' : 'var(--bg-card)',
+                  border: formData.role === 'customer' ? '2px solid #4f46e5' : '1px solid var(--border-glass)',
+                  color: formData.role === 'customer' ? 'var(--primary)' : 'var(--text-muted)',
                   cursor: 'pointer',
                   transition: 'all var(--transition-fast)',
                 }}
               >
                 <User size={22} color={formData.role === 'customer' ? '#818cf8' : 'currentColor'} />
-                <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Find & Save Deals</span>
-                <span style={{ fontSize: '0.75rem', color: formData.role === 'customer' ? '#cbd5e1' : 'var(--text-subtle)' }}>For Customers</span>
+                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: formData.role === 'customer' ? 'var(--text-main)' : 'inherit' }}>Find & Save Deals</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>For Customers</span>
               </button>
 
               <button
@@ -160,22 +156,22 @@ const Register = () => {
                   gap: '0.5rem',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  background: formData.role === 'business' ? 'rgba(6, 182, 212, 0.25)' : 'rgba(255, 255, 255, 0.04)',
-                  border: formData.role === 'business' ? '2px solid #06b6d4' : '1px solid rgba(255, 255, 255, 0.12)',
-                  color: formData.role === 'business' ? '#fff' : 'var(--text-muted)',
+                  background: formData.role === 'business' ? 'rgba(6, 182, 212, 0.25)' : 'var(--bg-card)',
+                  border: formData.role === 'business' ? '2px solid #06b6d4' : '1px solid var(--border-glass)',
+                  color: formData.role === 'business' ? 'var(--secondary)' : 'var(--text-muted)',
                   cursor: 'pointer',
                   transition: 'all var(--transition-fast)',
                 }}
               >
                 <Store size={22} color={formData.role === 'business' ? '#38bdf8' : 'currentColor'} />
-                <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Promote My Business</span>
-                <span style={{ fontSize: '0.75rem', color: formData.role === 'business' ? '#cbd5e1' : 'var(--text-subtle)' }}>For Store Owners</span>
+                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: formData.role === 'business' ? 'var(--text-main)' : 'inherit' }}>Promote My Business</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>For Store Owners</span>
               </button>
             </div>
           </div>
 
           <div className="form-group">
-            <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>
+            <label className="form-label">
               {formData.role === 'business' ? 'Owner / Manager Full Name' : 'Full Name'}
             </label>
             <input
@@ -186,15 +182,11 @@ const Register = () => {
               onChange={handleChange}
               placeholder="e.g. John Doe"
               className="form-input"
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                borderColor: 'rgba(255, 255, 255, 0.15)',
-              }}
             />
           </div>
 
           <div className="form-group">
-            <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Email Address</label>
+            <label className="form-label">Email Address</label>
             <input
               type="email"
               name="email"
@@ -204,15 +196,11 @@ const Register = () => {
               placeholder="name@example.com"
               className="form-input"
               autoComplete="email"
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                borderColor: 'rgba(255, 255, 255, 0.15)',
-              }}
             />
           </div>
 
           <div className="form-group">
-            <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Phone Number (Optional)</label>
+            <label className="form-label">Phone Number (Optional)</label>
             <input
               type="tel"
               name="phone"
@@ -220,16 +208,12 @@ const Register = () => {
               onChange={handleChange}
               placeholder="+1 (555) 000-0000"
               className="form-input"
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                borderColor: 'rgba(255, 255, 255, 0.15)',
-              }}
             />
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
             <div className="form-group">
-              <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Password</label>
+              <label className="form-label">Password</label>
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -240,11 +224,7 @@ const Register = () => {
                   placeholder="••••••••"
                   className="form-input"
                   autoComplete="new-password"
-                  style={{
-                    paddingRight: '2.5rem',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    borderColor: 'rgba(255, 255, 255, 0.15)',
-                  }}
+                  style={{ paddingRight: '2.5rem' }}
                 />
                 <button
                   type="button"
@@ -270,7 +250,7 @@ const Register = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Confirm Password</label>
+              <label className="form-label">Confirm Password</label>
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
@@ -281,11 +261,7 @@ const Register = () => {
                   placeholder="••••••••"
                   className="form-input"
                   autoComplete="new-password"
-                  style={{
-                    paddingRight: '2.5rem',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    borderColor: 'rgba(255, 255, 255, 0.15)',
-                  }}
+                  style={{ paddingRight: '2.5rem' }}
                 />
                 <button
                   type="button"
@@ -327,9 +303,9 @@ const Register = () => {
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-muted)', textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>
+        <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
           Already have an account?{' '}
-          <Link to="/login" style={{ color: '#a5b4fc', fontWeight: 600 }}>
+          <Link to="/login" style={{ color: 'var(--primary)', fontWeight: 600 }}>
             Sign In
           </Link>
         </div>

@@ -5,7 +5,7 @@ import { Store, Heart, Mail, Phone, MapPin, Sparkles } from 'lucide-react';
 const Footer = () => {
   return (
     <footer style={{
-      background: '#070a12',
+      background: 'var(--bg-card)',
       borderTop: '1px solid var(--border-glass)',
       paddingTop: '3.5rem',
       paddingBottom: '2.5rem',
@@ -54,7 +54,7 @@ const Footer = () => {
 
           {/* Col 2: Discover */}
           <div>
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: '#fff' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: 'var(--text-main)' }}>
               Discover
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -78,7 +78,7 @@ const Footer = () => {
 
           {/* Col 3: For Business Owners */}
           <div>
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: '#fff' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: 'var(--text-main)' }}>
               For Business Owners
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -99,7 +99,7 @@ const Footer = () => {
 
           {/* Col 4: Newsletter / Contact */}
           <div>
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: '#fff' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', color: 'var(--text-main)' }}>
               Stay Updated
             </h4>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '1rem' }}>
@@ -119,7 +119,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div style={{
-          borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+          borderTop: '1px solid var(--border-glass)',
           paddingTop: '1.75rem',
           display: 'flex',
           flexWrap: 'wrap',

@@ -72,10 +72,6 @@ const Login = () => {
           width: '100%',
           maxWidth: '480px',
           padding: '2.5rem',
-          background: 'transparent',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: 'var(--radius-lg)',
-          boxShadow: '0 0 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(99, 102, 241, 0.12)',
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
@@ -92,8 +88,8 @@ const Login = () => {
           }}>
             <Lock size={22} color="#fff" />
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>Welcome Back</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-main)' }}>Welcome Back</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             Sign in to access your discounts, promotions, and dashboard
           </p>
         </div>
@@ -103,11 +99,11 @@ const Login = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'rgba(239, 68, 68, 0.25)',
-            border: '1px solid rgba(239, 68, 68, 0.5)',
+            background: 'var(--danger-light, rgba(239, 68, 68, 0.15))',
+            border: '1px solid rgba(239, 68, 68, 0.4)',
             borderRadius: 'var(--radius-md)',
             padding: '0.75rem 1rem',
-            color: '#fca5a5',
+            color: '#ef4444',
             fontSize: '0.88rem',
             marginBottom: '1.5rem',
           }}>
@@ -118,7 +114,7 @@ const Login = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Email Address</label>
+            <label className="form-label">Email Address</label>
             <input
               type="email"
               required
@@ -130,15 +126,11 @@ const Login = () => {
               placeholder="name@example.com"
               className="form-input"
               autoComplete="email"
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                borderColor: 'rgba(255, 255, 255, 0.15)',
-              }}
             />
           </div>
 
           <div className="form-group">
-            <label className="form-label" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>Password</label>
+            <label className="form-label">Password</label>
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -151,11 +143,7 @@ const Login = () => {
                 placeholder="••••••••"
                 className="form-input"
                 autoComplete="current-password"
-                style={{
-                  paddingRight: '2.75rem',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  borderColor: 'rgba(255, 255, 255, 0.15)',
-                }}
+                style={{ paddingRight: '2.75rem' }}
               />
               <button
                 type="button"

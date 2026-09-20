@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import Galaxy from './components/Galaxy';
 import { ToastProvider } from './context/ToastContext';
+import { useTheme } from './context/ThemeContext';
 
 // Public Pages
 import Home from './pages/Home';
@@ -40,6 +41,8 @@ import AdminOffers from './pages/admin/Offers';
 import AdminReports from './pages/admin/Reports';
 
 function App() {
+  const { theme } = useTheme();
+
   return (
     <ToastProvider>
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative' }}>
@@ -53,7 +56,7 @@ function App() {
             height: '100vh',
             zIndex: 0,
             pointerEvents: 'none',
-            opacity: 0.85,
+            opacity: theme === 'light' ? 0.45 : 0.85,
           }}
           aria-hidden="true"
         >
@@ -67,6 +70,7 @@ function App() {
             transparent={true}
             starSpeed={0.4}
             speed={0.85}
+            lightMode={theme === 'light'}
           />
         </div>
 

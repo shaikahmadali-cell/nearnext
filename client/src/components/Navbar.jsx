@@ -16,6 +16,7 @@ import {
   X,
   Compass,
 } from 'lucide-react';
+import ThemeToggle from './ui/theme-toggle';
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
@@ -51,10 +52,10 @@ const Navbar = () => {
       position: 'sticky',
       top: 0,
       zIndex: 100,
-      background: 'rgba(11, 15, 25, 0.85)',
+      background: 'var(--bg-nav, rgba(11, 15, 25, 0.85))',
       backdropFilter: 'blur(16px)',
       WebkitBackdropFilter: 'blur(16px)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+      borderBottom: '1px solid var(--border-glass)',
     }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
         
@@ -110,7 +111,11 @@ const Navbar = () => {
         </div>
 
         {/* Right side CTA / Profile */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <div className="desktop-theme-toggle" style={{ display: 'none' }}>
+            <ThemeToggle />
+          </div>
+
           {isAuthenticated ? (
             <div style={{ position: 'relative' }}>
               <button
@@ -268,25 +273,7 @@ const Navbar = () => {
                     </Link>
                   )}
 
-                  <Link
-                    to="/profile"
-                    onClick={() => setDropdownOpen(false)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.6rem',
-                      padding: '0.65rem 0.85rem',
-                      borderRadius: 'var(--radius-sm)',
-                      fontSize: '0.9rem',
-                      color: 'var(--text-main)',
-                    }}
-                    className="hover-light"
-                  >
-                    <User size={16} color="#38bdf8" />
-                    Account Settings
-                  </Link>
-
-                  <hr style={{ borderColor: 'var(--border-glass)', margin: '0.4rem 0' }} />
+                  <div style={{ height: '1px', background: 'var(--border-glass)', margin: '0.25rem 0' }} />
 
                   <button
                     onClick={handleLogout}
@@ -402,16 +389,29 @@ const Navbar = () => {
               </button>
             </>
           )}
+
+          {/* Theme Switcher in Mobile Menu */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingTop: '0.75rem',
+            borderTop: '1px solid var(--border-glass)',
+          }}>
+            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>Theme Mode</span>
+            <ThemeToggle />
+          </div>
         </div>
       )}
 
       <style>{`
         @media (min-width: 768px) {
           .desktop-links { display: flex !important; }
+          .desktop-theme-toggle { display: block !important; }
           .mobile-toggle { display: none !important; }
         }
         .hover-light:hover {
-          background: rgba(255, 255, 255, 0.05);
+          background: var(--bg-card-hover, rgba(255, 255, 255, 0.05));
         }
 
         /* Modern Premium Navbar Buttons */
