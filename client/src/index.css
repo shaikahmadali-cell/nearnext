@@ -344,36 +344,66 @@ html.dark .badge-primary {
   color: var(--text-main);
 }
 
-/* Auth Cards (Transparent Glassmorphism) */
+/* Auth Cards (Fully Transparent Glassmorphic Design) */
 .login-card, .register-card {
-  background: rgba(11, 15, 25, 0.45);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-glass-bright, rgba(56, 189, 248, 0.25));
   border-radius: var(--radius-lg);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 35px rgba(14, 165, 233, 0.12);
+  box-shadow: 0 0 35px rgba(14, 165, 233, 0.15);
 }
 
 [data-theme='dark'] .login-card,
 [data-theme='dark'] .register-card,
 html.dark .login-card,
 html.dark .register-card {
-  background: rgba(11, 15, 25, 0.45);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 35px rgba(14, 165, 233, 0.15);
+  background: transparent !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3), 0 0 25px rgba(14, 165, 233, 0.15);
 }
 
 [data-theme='light'] .login-card,
 [data-theme='light'] .register-card,
 html.light .login-card,
 html.light .register-card {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: transparent !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  box-shadow: 0 0 35px rgba(14, 165, 233, 0.12);
+}
+
+/* Fully Transparent Form Controls for Auth Cards */
+.login-card .form-input,
+.register-card .form-input,
+.login-card .form-select,
+.register-card .form-select {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--border-glass, rgba(56, 189, 248, 0.2));
+  color: var(--text-main);
+}
+
+[data-theme='light'] .login-card .form-input,
+[data-theme='light'] .register-card .form-input,
+[data-theme='light'] .login-card .form-select,
+[data-theme='light'] .register-card .form-select {
+  background: rgba(255, 255, 255, 0.35) !important;
   border: 1px solid rgba(14, 165, 233, 0.25);
-  box-shadow: 0 16px 48px rgba(14, 165, 233, 0.1), 0 0 30px rgba(56, 189, 248, 0.08);
+  color: #000000;
+}
+
+.login-card .form-input:focus,
+.register-card .form-input:focus,
+.login-card .form-select:focus,
+.register-card .form-select:focus {
+  background: rgba(14, 165, 233, 0.05) !important;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
 /* Grid Layouts with Full Multi-Device Breakpoints */
