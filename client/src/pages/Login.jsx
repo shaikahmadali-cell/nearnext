@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Galaxy from '../components/Galaxy';
 import { Lock, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
@@ -63,36 +62,8 @@ const Login = () => {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '3rem 1.5rem',
-        overflow: 'hidden',
       }}
     >
-      {/* Interactive WebGL Galaxy Background for Login Page Only */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 0,
-          pointerEvents: 'none',
-          opacity: 0.85,
-        }}
-        aria-hidden="true"
-      >
-        <Galaxy
-          mouseRepulsion={true}
-          mouseInteraction={true}
-          density={1.5}
-          glowIntensity={0.5}
-          saturation={0.8}
-          hueShift={240}
-          transparent={true}
-          starSpeed={0.4}
-          speed={0.85}
-        />
-      </div>
-
       <div
         className="animate-fade-in login-card"
         style={{
