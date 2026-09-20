@@ -38,6 +38,14 @@ const Navbar = () => {
     return '/customer/dashboard';
   };
 
+  const handleNavMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
     <nav style={{
       position: 'sticky',
@@ -75,37 +83,29 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <div style={{ display: 'none', alignItems: 'center', gap: '2rem' }} className="desktop-links">
+        <div style={{ display: 'none', alignItems: 'center', gap: '1rem' }} className="desktop-links">
           <Link
             to="/offers"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              fontWeight: 600,
-              fontSize: '0.95rem',
-              color: location.pathname === '/offers' ? '#818cf8' : 'var(--text-main)',
-              transition: 'color var(--transition-fast)',
-            }}
+            onMouseMove={handleNavMouseMove}
+            className={`nav-premium-btn ${location.pathname === '/offers' ? 'active' : ''}`}
           >
-            <Tag size={17} />
-            Explore Deals
+            <span className="nav-spotlight" />
+            <span className="nav-btn-icon">
+              <Tag size={17} />
+            </span>
+            <span className="nav-btn-label">Explore Deals</span>
           </Link>
 
           <Link
             to="/businesses"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              fontWeight: 600,
-              fontSize: '0.95rem',
-              color: location.pathname === '/businesses' ? '#818cf8' : 'var(--text-main)',
-              transition: 'color var(--transition-fast)',
-            }}
+            onMouseMove={handleNavMouseMove}
+            className={`nav-premium-btn ${location.pathname === '/businesses' ? 'active' : ''}`}
           >
-            <Compass size={17} />
-            Local Businesses
+            <span className="nav-spotlight" />
+            <span className="nav-btn-icon">
+              <Compass size={17} />
+            </span>
+            <span className="nav-btn-label">Local Businesses</span>
           </Link>
         </div>
 
@@ -412,6 +412,113 @@ const Navbar = () => {
         }
         .hover-light:hover {
           background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Modern Premium Navbar Buttons */
+        .nav-premium-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          padding: 0.45rem 0.9rem;
+          font-weight: 600;
+          font-size: 0.95rem;
+          color: var(--text-main);
+          border-radius: var(--radius-md);
+          text-decoration: none;
+          overflow: hidden;
+          background: transparent;
+          border: 1px solid transparent;
+          transition: color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                      background 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
+          cursor: pointer;
+          user-select: none;
+        }
+
+        .nav-premium-btn .nav-btn-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: inherit;
+          transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+          z-index: 1;
+        }
+
+        .nav-premium-btn .nav-btn-label {
+          position: relative;
+          z-index: 1;
+          transition: color 300ms cubic-bezier(0.16, 1, 0.3, 1), text-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Mouse Spotlight Glow */
+        .nav-premium-btn .nav-spotlight {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          opacity: 0;
+          background: radial-gradient(85px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(129, 140, 248, 0.22), rgba(6, 182, 212, 0.08) 50%, transparent 80%);
+          transition: opacity 300ms ease-out;
+          z-index: 0;
+        }
+
+        /* Hover States */
+        .nav-premium-btn:hover {
+          color: #ffffff;
+          background: linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%);
+          border-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 4px 20px rgba(79, 70, 229, 0.22), 0 0 12px rgba(6, 182, 212, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-premium-btn:hover .nav-spotlight {
+          opacity: 1;
+        }
+
+        .nav-premium-btn:hover .nav-btn-icon {
+          transform: scale(1.1) translateY(-1.5px);
+          color: #a5b4fc;
+        }
+
+        .nav-premium-btn:hover .nav-btn-label {
+          color: #f8fafc;
+          text-shadow: 0 0 12px rgba(165, 180, 252, 0.45);
+        }
+
+        /* Bottom Border / Underline animation */
+        .nav-premium-btn::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #4f46e5 0%, #06b6d4 100%);
+          border-radius: 9999px;
+          transform: translateX(-50%);
+          transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease-out;
+          box-shadow: 0 0 8px rgba(79, 70, 229, 0.6);
+          z-index: 2;
+        }
+
+        .nav-premium-btn:hover::after {
+          width: 75%;
+        }
+
+        /* Active Link State */
+        .nav-premium-btn.active {
+          color: #e0e7ff;
+          background: rgba(79, 70, 229, 0.12);
+          border-color: rgba(99, 102, 241, 0.25);
+        }
+
+        .nav-premium-btn.active::after {
+          width: 75%;
+        }
+
+        .nav-premium-btn.active .nav-btn-icon {
+          color: #818cf8;
         }
       `}</style>
     </nav>
