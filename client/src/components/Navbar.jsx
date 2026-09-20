@@ -65,11 +65,11 @@ const Navbar = () => {
             width: '40px',
             height: '40px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)',
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 15px rgba(79, 70, 229, 0.4)',
+            boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)',
           }}>
             <Store size={22} color="#ffffff" />
           </div>
@@ -176,7 +176,7 @@ const Navbar = () => {
                     }}
                     className="hover-light"
                   >
-                    <LayoutDashboard size={16} color="#818cf8" />
+                    <LayoutDashboard size={16} color="#0ea5e9" />
                     Dashboard
                   </Link>
 
@@ -195,7 +195,7 @@ const Navbar = () => {
                           color: 'var(--text-main)',
                         }}
                       >
-                        <Heart size={16} color="#f43f5e" />
+                        <Heart size={16} color="#0ea5e9" />
                         Saved Deals
                       </Link>
                       <Link
@@ -211,7 +211,7 @@ const Navbar = () => {
                           color: 'var(--text-main)',
                         }}
                       >
-                        <MessageSquare size={16} color="#06b6d4" />
+                        <MessageSquare size={16} color="#38bdf8" />
                         My Enquiries
                       </Link>
                     </>
@@ -232,7 +232,7 @@ const Navbar = () => {
                           color: 'var(--text-main)',
                         }}
                       >
-                        <PlusCircle size={16} color="#10b981" />
+                        <PlusCircle size={16} color="#0ea5e9" />
                         Post New Offer
                       </Link>
                       <Link
@@ -248,7 +248,7 @@ const Navbar = () => {
                           color: 'var(--text-main)',
                         }}
                       >
-                        <Tag size={16} color="#818cf8" />
+                        <Tag size={16} color="#38bdf8" />
                         My Offers
                       </Link>
                     </>
@@ -268,7 +268,7 @@ const Navbar = () => {
                         color: 'var(--text-main)',
                       }}
                     >
-                      <ShieldAlert size={16} color="#f59e0b" />
+                      <ShieldAlert size={16} color="#0ea5e9" />
                       Admin Console
                     </Link>
                   )}
@@ -342,30 +342,30 @@ const Navbar = () => {
           <Link
             to="/offers"
             onClick={() => setMobileMenuOpen(false)}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600 }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)' }}
           >
-            <Tag size={18} color="#818cf8" /> Explore Deals
+            <Tag size={18} color="#0ea5e9" /> Explore Deals
           </Link>
           <Link
             to="/businesses"
             onClick={() => setMobileMenuOpen(false)}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600 }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)' }}
           >
-            <Compass size={18} color="#06b6d4" /> Local Businesses
+            <Compass size={18} color="#38bdf8" /> Local Businesses
           </Link>
           {isAuthenticated && (
             <>
               <Link
                 to={getDashboardLink()}
                 onClick={() => setMobileMenuOpen(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)' }}
               >
-                <LayoutDashboard size={18} color="#10b981" /> Dashboard ({user?.role})
+                <LayoutDashboard size={18} color="#0ea5e9" /> Dashboard ({user?.role})
               </Link>
               <Link
                 to="/profile"
                 onClick={() => setMobileMenuOpen(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)' }}
               >
                 <User size={18} color="#38bdf8" /> Account Settings
               </Link>
@@ -459,17 +459,17 @@ const Navbar = () => {
           border-radius: inherit;
           pointer-events: none;
           opacity: 0;
-          background: radial-gradient(85px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(129, 140, 248, 0.22), rgba(6, 182, 212, 0.08) 50%, transparent 80%);
+          background: radial-gradient(85px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.08) 50%, transparent 80%);
           transition: opacity 300ms ease-out;
           z-index: 0;
         }
 
         /* Hover States */
         .nav-premium-btn:hover {
-          color: #ffffff;
-          background: linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%);
-          border-color: rgba(255, 255, 255, 0.1);
-          box-shadow: 0 4px 20px rgba(79, 70, 229, 0.22), 0 0 12px rgba(6, 182, 212, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+          color: var(--text-main);
+          background: rgba(14, 165, 233, 0.08);
+          border-color: rgba(14, 165, 233, 0.25);
+          box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15), inset 0 0 0 1px rgba(56, 189, 248, 0.1);
         }
 
         .nav-premium-btn:hover .nav-spotlight {
@@ -478,12 +478,12 @@ const Navbar = () => {
 
         .nav-premium-btn:hover .nav-btn-icon {
           transform: scale(1.1) translateY(-1.5px);
-          color: #a5b4fc;
+          color: #0ea5e9;
         }
 
         .nav-premium-btn:hover .nav-btn-label {
-          color: #f8fafc;
-          text-shadow: 0 0 12px rgba(165, 180, 252, 0.45);
+          color: var(--text-main);
+          text-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
         }
 
         /* Bottom Border / Underline animation */
@@ -494,11 +494,11 @@ const Navbar = () => {
           left: 50%;
           width: 0;
           height: 2px;
-          background: linear-gradient(90deg, #4f46e5 0%, #06b6d4 100%);
+          background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 100%);
           border-radius: 9999px;
           transform: translateX(-50%);
           transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease-out;
-          box-shadow: 0 0 8px rgba(79, 70, 229, 0.6);
+          box-shadow: 0 0 8px rgba(14, 165, 233, 0.5);
           z-index: 2;
         }
 
@@ -508,9 +508,9 @@ const Navbar = () => {
 
         /* Active Link State */
         .nav-premium-btn.active {
-          color: #e0e7ff;
-          background: rgba(79, 70, 229, 0.12);
-          border-color: rgba(99, 102, 241, 0.25);
+          color: var(--text-main);
+          background: rgba(14, 165, 233, 0.12);
+          border-color: rgba(14, 165, 233, 0.3);
         }
 
         .nav-premium-btn.active::after {
@@ -518,7 +518,7 @@ const Navbar = () => {
         }
 
         .nav-premium-btn.active .nav-btn-icon {
-          color: #818cf8;
+          color: #0ea5e9;
         }
       `}</style>
     </nav>

@@ -47,10 +47,10 @@ export const ToastProvider = ({ children }) => {
         }}
       >
         {toasts.map((item) => {
-          let bg = '#1e1b4b';
-          let border = '#6366f1';
+          let bg = 'var(--bg-card)';
+          let border = '#0ea5e9';
           let Icon = Info;
-          let iconColor = '#818cf8';
+          let iconColor = '#0ea5e9';
 
           if (item.type === 'success') {
             bg = '#064e3b';

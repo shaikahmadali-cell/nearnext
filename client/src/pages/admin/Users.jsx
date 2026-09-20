@@ -59,7 +59,7 @@ const AdminUsers = () => {
           <ArrowLeft size={16} /> Back to Admin Console
         </Link>
         <h1 style={{ fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <UsersIcon size={28} color="#818cf8" /> User Governance ({users.length})
+          <UsersIcon size={28} color="#0ea5e9" /> User Governance ({users.length})
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
           Manage customer accounts, merchants, and staff roles.

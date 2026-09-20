@@ -166,7 +166,7 @@ const AdminOffers = () => {
                     <span className="badge badge-primary">{offer.discountValue}</span>
                   </td>
 
-                  <td style={{ fontWeight: 800, color: '#818cf8' }}>
+                  <td style={{ fontWeight: 800, color: '#0ea5e9' }}>
                     {offer.promoCode}
                   </td>
 

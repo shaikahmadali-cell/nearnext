@@ -51,12 +51,12 @@ const Home = () => {
   };
 
   const categories = [
-    { name: 'Dining & Cafes', count: '45+ Deals', icon: '🍕', color: '#f97316' },
-    { name: 'Beauty & Spa', count: '28+ Deals', icon: '✨', color: '#ec4899' },
-    { name: 'Fitness & Sports', count: '19+ Deals', icon: '⚡', color: '#10b981' },
-    { name: 'Retail & Shopping', count: '52+ Deals', icon: '🛍️', color: '#8b5cf6' },
-    { name: 'Automotive & Repairs', count: '14+ Deals', icon: '🚗', color: '#06b6d4' },
-    { name: 'Entertainment & Events', count: '23+ Deals', icon: '🎉', color: '#eab308' },
+    { name: 'Dining & Cafes', count: '45+ Deals', icon: '🍕', color: '#0ea5e9' },
+    { name: 'Beauty & Spa', count: '28+ Deals', icon: '✨', color: '#38bdf8' },
+    { name: 'Fitness & Sports', count: '19+ Deals', icon: '⚡', color: '#0284c7' },
+    { name: 'Retail & Shopping', count: '52+ Deals', icon: '🛍️', color: '#0ea5e9' },
+    { name: 'Automotive & Repairs', count: '14+ Deals', icon: '🚗', color: '#38bdf8' },
+    { name: 'Entertainment & Events', count: '23+ Deals', icon: '🎉', color: '#0284c7' },
   ];
 
   return (
@@ -67,7 +67,7 @@ const Home = () => {
         position: 'relative',
         padding: '3.5rem 0 2.5rem',
         overflow: 'hidden',
-        background: 'radial-gradient(circle at 50% 20%, rgba(79, 70, 229, 0.15) 0%, rgba(11, 15, 25, 0) 70%)',
+        background: 'radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.12) 0%, transparent 70%)',
         width: '100%',
       }}>
         <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
@@ -77,18 +77,18 @@ const Home = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'rgba(79, 70, 229, 0.15)',
-            border: '1px solid rgba(79, 70, 229, 0.3)',
+            background: 'rgba(14, 165, 233, 0.12)',
+            border: '1px solid rgba(14, 165, 233, 0.3)',
             borderRadius: 'var(--radius-full)',
             padding: '0.4rem 1rem',
             marginBottom: '1.25rem',
-            color: '#a5b4fc',
+            color: '#0ea5e9',
             fontSize: '0.85rem',
             fontWeight: 600,
             maxWidth: '100%',
             whiteSpace: 'normal',
           }}>
-            <Sparkles size={16} color="#818cf8" style={{ flexShrink: 0 }} />
+            <Sparkles size={16} color="#0ea5e9" style={{ flexShrink: 0 }} />
             <span>Discover Top Neighborhood Deals & Save Up To 70%</span>
           </div>
 
@@ -129,22 +129,22 @@ const Home = () => {
             gap: '1.75rem 2.5rem',
             marginTop: '3rem',
             paddingTop: '2rem',
-            borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+            borderTop: '1px solid var(--border-glass)',
           }}>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff' }}>500+</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)' }}>500+</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Local Businesses</div>
             </div>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#10b981' }}>$120K+</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0ea5e9' }}>$120K+</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Customer Savings</div>
             </div>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#818cf8' }}>1,400+</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#38bdf8' }}>1,400+</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Verified Promotions</div>
             </div>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#f59e0b' }}>4.9 ★</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0284c7' }}>4.9 ★</div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Average Satisfaction</div>
             </div>
           </div>
@@ -158,7 +158,7 @@ const Home = () => {
             <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>Browse Categories</span>
             <h2 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800 }}>Explore Local Industry Sectors</h2>
           </div>
-          <Link to="/offers" style={{ color: '#818cf8', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.95rem' }}>
+          <Link to="/offers" style={{ color: '#0ea5e9', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.95rem' }}>
             All Deals <ArrowRight size={16} />
           </Link>
         </div>
@@ -238,11 +238,11 @@ const Home = () => {
       </section>
 
       {/* Featured Businesses Section */}
-      <section style={{ background: 'rgba(19, 27, 46, 0.4)', padding: '3.5rem 0', borderTop: '1px solid var(--border-glass)', borderBottom: '1px solid var(--border-glass)', width: '100%' }}>
+      <section style={{ background: 'var(--bg-secondary)', padding: '3.5rem 0', borderTop: '1px solid var(--border-glass)', borderBottom: '1px solid var(--border-glass)', width: '100%' }}>
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <span className="badge badge-success" style={{ marginBottom: '0.5rem' }}>Verified Partners</span>
+              <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>Verified Partners</span>
               <h2 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800 }}>Top Rated Local Businesses</h2>
             </div>
             <Link to="/businesses" className="btn btn-secondary btn-sm">
@@ -265,8 +265,8 @@ const Home = () => {
           style={{
             padding: '2.5rem 2rem',
             borderRadius: 'var(--radius-lg)',
-            background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(6, 182, 212, 0.15) 100%)',
-            border: '1px solid rgba(79, 70, 229, 0.35)',
+            background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(56, 189, 248, 0.08) 100%)',
+            border: '1px solid rgba(14, 165, 233, 0.3)',
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '2rem',
@@ -274,7 +274,7 @@ const Home = () => {
           }}
         >
           <div>
-            <span className="badge badge-warning" style={{ marginBottom: '0.75rem' }}>Are You a Business Owner?</span>
+            <span className="badge badge-primary" style={{ marginBottom: '0.75rem' }}>Are You a Business Owner?</span>
             <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', fontWeight: 800, lineHeight: 1.2, marginBottom: '1rem' }}>
               Promote Your Business & Reach Thousands of Nearby Customers
             </h2>
@@ -292,22 +292,22 @@ const Home = () => {
           </div>
 
           {/* Feature list box */}
-          <div style={{ background: 'rgba(11, 15, 25, 0.6)', padding: '1.75rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.25rem', color: '#fff' }}>
+          <div style={{ background: 'var(--bg-card)', padding: '1.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-glass)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.25rem', color: 'var(--text-main)' }}>
               Why Local Businesses Choose NearNest:
             </h3>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.92rem' }}>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', color: 'var(--text-muted)' }}>
-                <CheckCircle size={18} color="#10b981" style={{ flexShrink: 0 }} /> No setup fees or hidden middleman cuts
+                <CheckCircle size={18} color="#0ea5e9" style={{ flexShrink: 0 }} /> No setup fees or hidden middleman cuts
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', color: 'var(--text-muted)' }}>
-                <CheckCircle size={18} color="#10b981" style={{ flexShrink: 0 }} /> Instant coupon redemption & click analytics
+                <CheckCircle size={18} color="#0ea5e9" style={{ flexShrink: 0 }} /> Instant coupon redemption & click analytics
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', color: 'var(--text-muted)' }}>
-                <CheckCircle size={18} color="#10b981" style={{ flexShrink: 0 }} /> Direct customer lead messaging portal
+                <CheckCircle size={18} color="#0ea5e9" style={{ flexShrink: 0 }} /> Direct customer lead messaging portal
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', color: 'var(--text-muted)' }}>
-                <CheckCircle size={18} color="#10b981" style={{ flexShrink: 0 }} /> Hyper-targeted neighborhood search rankings
+                <CheckCircle size={18} color="#0ea5e9" style={{ flexShrink: 0 }} /> Hyper-targeted neighborhood search rankings
               </li>
             </ul>
           </div>

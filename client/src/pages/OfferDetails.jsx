@@ -255,7 +255,7 @@ const OfferDetails = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           
           {/* Coupon Action Card */}
-          <div className="glass-panel" style={{ padding: '2rem', border: '1px solid rgba(79, 70, 229, 0.35)', position: 'relative' }}>
+          <div className="glass-panel" style={{ padding: '2rem', border: '1px solid var(--border-glass)', position: 'relative' }}>
             
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
               <span className="badge badge-primary">{offer.category}</span>
@@ -285,8 +285,8 @@ const OfferDetails = () => {
 
             {/* Promo Code Copy Box */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%)',
-              border: '2px dashed #6366f1',
+              background: 'rgba(14, 165, 233, 0.08)',
+              border: '2px dashed #0ea5e9',
               borderRadius: 'var(--radius-md)',
               padding: '1.25rem',
               textAlign: 'center',
@@ -295,7 +295,7 @@ const OfferDetails = () => {
               <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 700, marginBottom: '0.5rem' }}>
                 PROMOTIONAL COUPON CODE
               </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '2px', color: '#fff', marginBottom: '1rem' }}>
+              <div style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '2px', color: 'var(--text-main)', marginBottom: '1rem' }}>
                 {offer.promoCode || 'DEAL2026'}
               </div>
               <button
@@ -396,10 +396,10 @@ const OfferDetails = () => {
       {/* Digital Voucher Modal */}
       {voucherOpen && (
         <div className="modal-backdrop" onClick={() => setVoucherOpen(false)}>
-          <div className="modal-content animate-fade-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px', padding: '0', overflow: 'hidden', background: '#0d1322' }}>
+          <div className="modal-content animate-fade-in" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px', padding: '0', overflow: 'hidden', background: 'var(--bg-card)' }}>
             
             {/* Voucher Header Banner */}
-            <div style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)', padding: '1.75rem 2rem', color: '#fff', position: 'relative' }}>
+            <div style={{ background: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)', padding: '1.75rem 2rem', color: '#fff', position: 'relative' }}>
               <button
                 onClick={() => setVoucherOpen(false)}
                 style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(0,0,0,0.2)', border: 'none', color: '#fff', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}

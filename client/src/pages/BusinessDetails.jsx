@@ -277,7 +277,7 @@ const BusinessDetails = () => {
             {/* Active Promotions Section */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
-                <Tag size={20} color="#818cf8" />
+                <Tag size={20} color="#0ea5e9" />
                 <h2 style={{ fontSize: '1.45rem', fontWeight: 800 }}>
                   Active Deals & Promotions ({business.offers?.length || 0})
                 </h2>
@@ -478,7 +478,7 @@ const BusinessDetails = () => {
                       href={getDirectionsUrl()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#6366f1', fontSize: '0.82rem', marginTop: '0.35rem', fontWeight: 600 }}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#0ea5e9', fontSize: '0.82rem', marginTop: '0.35rem', fontWeight: 600 }}
                     >
                       <Navigation size={13} /> Open in Google Maps
                     </a>
@@ -486,7 +486,7 @@ const BusinessDetails = () => {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                  <Clock size={18} color="#06b6d4" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <Clock size={18} color="#0ea5e9" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
                     <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>Working Hours</div>
                     <div>{business.openingHours || 'Mon - Sat: 9:00 AM - 8:00 PM'}</div>
@@ -499,7 +499,7 @@ const BusinessDetails = () => {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <Mail size={18} color="#818cf8" style={{ flexShrink: 0 }} />
+                  <Mail size={18} color="#0ea5e9" style={{ flexShrink: 0 }} />
                   <div>{business.email}</div>
                 </div>
               </div>
@@ -508,7 +508,7 @@ const BusinessDetails = () => {
             {/* Direct Contact / Enquiry Form */}
             <div className="glass-panel" style={{ padding: '1.75rem' }}>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <MessageSquare size={18} color="#818cf8" /> Send Direct Inquiry
+                <MessageSquare size={18} color="#0ea5e9" /> Send Direct Inquiry
               </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
                 Questions about services, pricing, or bookings? Send a note directly to the store manager.

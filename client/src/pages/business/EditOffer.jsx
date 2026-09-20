@@ -109,7 +109,7 @@ const EditOffer = () => {
           <ArrowLeft size={16} /> Back to My Offers
         </Link>
         <h1 style={{ fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <Tag size={28} color="#818cf8" /> Edit Promotion
+          <Tag size={28} color="#0ea5e9" /> Edit Promotion
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
           Update offer validity, discount value, promo code, or media.

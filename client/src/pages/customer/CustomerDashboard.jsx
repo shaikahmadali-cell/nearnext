@@ -54,7 +54,7 @@ const CustomerDashboard = () => {
         style={{
           padding: '2.5rem',
           marginBottom: '2.5rem',
-          background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(6, 182, 212, 0.15) 100%)',
+          background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(56, 189, 248, 0.08) 100%)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -101,7 +101,7 @@ const CustomerDashboard = () => {
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Sent Enquiries</div>
             <div style={{ fontSize: '2rem', fontWeight: 800, marginTop: '0.25rem' }}>{enquiries.length}</div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(6, 182, 212, 0.15)', color: '#06b6d4' }}>
+          <div className="stat-icon" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#0ea5e9' }}>
             <MessageSquare size={24} />
           </div>
         </div>
@@ -126,7 +126,7 @@ const CustomerDashboard = () => {
             <h2 style={{ fontSize: '1.45rem', fontWeight: 800 }}>Saved Deals & Coupons</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Deals you bookmarked for later redemption</p>
           </div>
-          <Link to="/customer/saved" style={{ color: '#818cf8', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+          <Link to="/customer/saved" style={{ color: '#0ea5e9', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
             View All ({savedOffers.length}) <ArrowRight size={15} />
           </Link>
         </div>
@@ -158,7 +158,7 @@ const CustomerDashboard = () => {
             <h2 style={{ fontSize: '1.45rem', fontWeight: 800 }}>Recent Merchant Conversations</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Track questions sent to local store owners</p>
           </div>
-          <Link to="/customer/enquiries" style={{ color: '#818cf8', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+          <Link to="/customer/enquiries" style={{ color: '#0ea5e9', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
             View Inbox ({enquiries.length}) <ArrowRight size={15} />
           </Link>
         </div>

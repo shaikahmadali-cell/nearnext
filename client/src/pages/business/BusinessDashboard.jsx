@@ -93,7 +93,7 @@ const BusinessDashboard = () => {
         style={{
           padding: '2.5rem',
           marginBottom: '2.5rem',
-          background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(6, 182, 212, 0.15) 100%)',
+          background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(56, 189, 248, 0.08) 100%)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -143,7 +143,7 @@ const BusinessDashboard = () => {
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Active Offers</div>
             <div style={{ fontSize: '2rem', fontWeight: 800, marginTop: '0.25rem' }}>{analytics?.activeOffers || 0}</div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(79, 70, 229, 0.15)', color: '#818cf8' }}>
+          <div className="stat-icon" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#0ea5e9' }}>
             <Tag size={24} />
           </div>
         </div>
@@ -153,7 +153,7 @@ const BusinessDashboard = () => {
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Total Views</div>
             <div style={{ fontSize: '2rem', fontWeight: 800, marginTop: '0.25rem' }}>{analytics?.totalViews || 0}</div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(6, 182, 212, 0.15)', color: '#06b6d4' }}>
+          <div className="stat-icon" style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8' }}>
             <Eye size={24} />
           </div>
         </div>
@@ -191,10 +191,10 @@ const BusinessDashboard = () => {
             gap: '1rem',
             transition: 'transform var(--transition-base), border-color var(--transition-base)',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(79, 70, 229, 0.5)')}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.5)')}
           onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-glass)')}
         >
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(79, 70, 229, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#818cf8' }}>
+          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(14, 165, 233, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0ea5e9' }}>
             <PlusCircle size={24} />
           </div>
           <div>
@@ -203,7 +203,7 @@ const BusinessDashboard = () => {
               Launch discounts, coupons, BOGO deals, or flash sale campaigns.
             </p>
           </div>
-          <div style={{ color: '#818cf8', fontWeight: 600, fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto' }}>
+          <div style={{ color: '#0ea5e9', fontWeight: 600, fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto' }}>
             Create Campaign <ArrowRight size={14} />
           </div>
         </Link>
@@ -270,7 +270,7 @@ const BusinessDashboard = () => {
             <h2 style={{ fontSize: '1.45rem', fontWeight: 800 }}>Top Performing Offers</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Deals generating highest engagement</p>
           </div>
-          <Link to="/business/analytics" style={{ color: '#818cf8', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+          <Link to="/business/analytics" style={{ color: '#0ea5e9', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
             Detailed Analytics <BarChart2 size={16} />
           </Link>
         </div>
@@ -291,11 +291,11 @@ const BusinessDashboard = () => {
               <tbody>
                 {analytics.topOffers.map((o) => (
                   <tr key={o._id}>
-                    <td style={{ fontWeight: 700, color: '#fff' }}>{o.title}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--text-main)' }}>{o.title}</td>
                     <td>
                       <span className="badge badge-primary">{o.discountValue}</span>
                     </td>
-                    <td style={{ color: '#818cf8', fontWeight: 800 }}>{o.promoCode}</td>
+                    <td style={{ color: '#0ea5e9', fontWeight: 800 }}>{o.promoCode}</td>
                     <td>{o.viewsCount || 0}</td>
                     <td>{o.savesCount || 0}</td>
                     <td>

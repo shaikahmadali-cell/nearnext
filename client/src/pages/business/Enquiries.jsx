@@ -170,7 +170,7 @@ const BusinessEnquiries = () => {
                 </div>
 
                 {selectedEnquiry.offer && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: '#818cf8', marginTop: '0.5rem', background: 'rgba(79, 70, 229, 0.1)', padding: '0.3rem 0.65rem', borderRadius: 'var(--radius-sm)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: '#0ea5e9', marginTop: '0.5rem', background: 'rgba(14, 165, 233, 0.1)', padding: '0.3rem 0.65rem', borderRadius: 'var(--radius-sm)' }}>
                     <Tag size={13} /> Inquiry regarding offer: <strong>{selectedEnquiry.offer.title}</strong>
                   </div>
                 )}
@@ -180,8 +180,8 @@ const BusinessEnquiries = () => {
               <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem', paddingRight: '0.5rem', marginBottom: '1rem' }}>
                 
                 {/* Original Customer Message */}
-                <div style={{ alignSelf: 'flex-start', maxWidth: '85%', background: 'rgba(255, 255, 255, 0.06)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-glass)' }}>
-                  <div style={{ fontSize: '0.75rem', color: '#38bdf8', marginBottom: '0.25rem', fontWeight: 600 }}>
+                <div style={{ alignSelf: 'flex-start', maxWidth: '85%', background: 'var(--bg-card)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-glass)' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#0ea5e9', marginBottom: '0.25rem', fontWeight: 600 }}>
                     Customer Inquiry • {new Date(selectedEnquiry.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
                   <p style={{ fontSize: '0.9rem', lineHeight: 1.5 }}>{selectedEnquiry.message}</p>

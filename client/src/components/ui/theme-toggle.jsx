@@ -10,7 +10,7 @@ export default function ThemeToggle({ className = '', style = {} }) {
       type="button"
       onClick={toggleTheme}
       className={`nearnest-theme-toggle ${className}`}
-      aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      aria-label="Toggle dark and light mode"
       aria-pressed={!isDark}
       title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       style={style}
@@ -42,25 +42,25 @@ export default function ThemeToggle({ className = '', style = {} }) {
           align-items: center;
           justify-content: space-between;
           padding: 3px 6px;
-          border: 1px solid var(--border-glass-bright, rgba(255, 255, 255, 0.15));
-          background: var(--bg-card, rgba(19, 27, 46, 0.8));
+          border: 1px solid var(--border-glass, #1E293B);
+          background: var(--bg-card, #111827);
           cursor: pointer;
           transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                       border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                       box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
           user-select: none;
           flex-shrink: 0;
         }
 
         .nearnest-theme-toggle:focus-visible {
           outline: none;
-          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .nearnest-theme-toggle:hover {
-          border-color: rgba(99, 102, 241, 0.4);
-          box-shadow: 0 0 16px rgba(79, 70, 229, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+          border-color: #38bdf8;
+          box-shadow: 0 0 16px rgba(14, 165, 233, 0.3);
         }
 
         /* Ambient track icons */
@@ -70,8 +70,8 @@ export default function ThemeToggle({ className = '', style = {} }) {
           justify-content: center;
           width: 20px;
           height: 20px;
-          color: var(--text-muted, #94a3b8);
-          opacity: 0.65;
+          color: var(--text-muted, #CBD5E1);
+          opacity: 0.75;
           pointer-events: none;
           transition: opacity 0.25s ease, color 0.25s ease;
         }
@@ -87,22 +87,24 @@ export default function ThemeToggle({ className = '', style = {} }) {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
-          box-shadow: 0 2px 6px rgba(79, 70, 229, 0.4);
+          background: #0ea5e9;
+          color: #ffffff;
+          box-shadow: 0 2px 6px rgba(14, 165, 233, 0.4);
           transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                       background 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .toggle-thumb.is-dark {
           transform: translateX(0);
+          background: #0ea5e9;
           color: #ffffff;
         }
 
         .toggle-thumb.is-light {
           transform: translateX(32px);
-          background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+          background: #0ea5e9;
           color: #ffffff;
-          box-shadow: 0 2px 8px rgba(245, 158, 11, 0.45);
+          box-shadow: 0 2px 8px rgba(14, 165, 233, 0.45);
         }
 
         .thumb-icon {
@@ -118,20 +120,20 @@ export default function ThemeToggle({ className = '', style = {} }) {
           transform: rotate(0deg);
         }
 
-        /* Light mode specific toggle appearance */
+        /* Light mode specific toggle appearance (White + Light Blue + Black) */
         [data-theme='light'] .nearnest-theme-toggle {
-          background: #e2e8f0;
-          border-color: #cbd5e1;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(0, 0, 0, 0.06);
+          background: #FFFFFF;
+          border-color: #D7EAF4;
+          box-shadow: 0 2px 8px rgba(14, 165, 233, 0.12);
         }
 
         [data-theme='light'] .nearnest-theme-toggle:hover {
-          border-color: #94a3b8;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+          border-color: #38bdf8;
+          box-shadow: 0 2px 12px rgba(14, 165, 233, 0.2);
         }
 
         [data-theme='light'] .toggle-track-icon {
-          color: #64748b;
+          color: #475569;
         }
 
         @media (prefers-reduced-motion: reduce) {

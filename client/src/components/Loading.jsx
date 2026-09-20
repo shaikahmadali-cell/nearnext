@@ -21,8 +21,8 @@ export const Spinner = ({ size = 'medium', text = 'Loading...' }) => {
         style={{
           width: sizeMap[size] || '40px',
           height: sizeMap[size] || '40px',
-          border: '3px solid rgba(79, 70, 229, 0.2)',
-          borderTop: '3px solid #4f46e5',
+          border: '3px solid rgba(14, 165, 233, 0.2)',
+          borderTop: '3px solid #0ea5e9',
           borderRadius: '50%',
           animation: 'spin 0.8s linear infinite',
         }}

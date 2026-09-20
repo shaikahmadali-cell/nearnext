@@ -86,7 +86,7 @@ const Offers = () => {
         <Spinner text="Loading exclusive deals..." />
       ) : offers.length === 0 ? (
         <div className="glass-panel" style={{ textAlign: 'center', padding: '4rem 2rem', borderRadius: 'var(--radius-lg)' }}>
-          <Tag size={48} color="#818cf8" style={{ margin: '0 auto 1rem', opacity: 0.6 }} />
+          <Tag size={48} color="#0ea5e9" style={{ margin: '0 auto 1rem', opacity: 0.8 }} />
           <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '0.5rem' }}>No offers matched your filter</h3>
           <p style={{ color: 'var(--text-muted)', maxWidth: '460px', margin: '0 auto 1.5rem' }}>
             Try resetting your category or search query to find more promotional discounts.

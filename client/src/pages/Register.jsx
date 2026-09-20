@@ -86,12 +86,12 @@ const Register = () => {
             width: '48px',
             height: '48px',
             borderRadius: '14px',
-            background: 'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)',
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 1rem',
-            boxShadow: '0 0 25px rgba(79, 70, 229, 0.5)',
+            boxShadow: '0 0 25px rgba(14, 165, 233, 0.5)',
           }}>
             <UserPlus size={22} color="#fff" />
           </div>
@@ -134,14 +134,14 @@ const Register = () => {
                   gap: '0.5rem',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  background: formData.role === 'customer' ? 'rgba(79, 70, 229, 0.25)' : 'var(--bg-card)',
-                  border: formData.role === 'customer' ? '2px solid #4f46e5' : '1px solid var(--border-glass)',
+                  background: formData.role === 'customer' ? 'rgba(14, 165, 233, 0.15)' : 'var(--bg-card)',
+                  border: formData.role === 'customer' ? '2px solid #0ea5e9' : '1px solid var(--border-glass)',
                   color: formData.role === 'customer' ? 'var(--primary)' : 'var(--text-muted)',
                   cursor: 'pointer',
                   transition: 'all var(--transition-fast)',
                 }}
               >
-                <User size={22} color={formData.role === 'customer' ? '#818cf8' : 'currentColor'} />
+                <User size={22} color={formData.role === 'customer' ? '#0ea5e9' : 'currentColor'} />
                 <span style={{ fontWeight: 600, fontSize: '0.9rem', color: formData.role === 'customer' ? 'var(--text-main)' : 'inherit' }}>Find & Save Deals</span>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>For Customers</span>
               </button>
@@ -156,8 +156,8 @@ const Register = () => {
                   gap: '0.5rem',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  background: formData.role === 'business' ? 'rgba(6, 182, 212, 0.25)' : 'var(--bg-card)',
-                  border: formData.role === 'business' ? '2px solid #06b6d4' : '1px solid var(--border-glass)',
+                  background: formData.role === 'business' ? 'rgba(56, 189, 248, 0.15)' : 'var(--bg-card)',
+                  border: formData.role === 'business' ? '2px solid #38bdf8' : '1px solid var(--border-glass)',
                   color: formData.role === 'business' ? 'var(--secondary)' : 'var(--text-muted)',
                   cursor: 'pointer',
                   transition: 'all var(--transition-fast)',
@@ -295,7 +295,7 @@ const Register = () => {
               width: '100%',
               marginTop: '1rem',
               padding: '0.85rem',
-              boxShadow: '0 8px 25px rgba(79, 70, 229, 0.4)',
+              boxShadow: '0 8px 25px rgba(14, 165, 233, 0.4)',
             }}
           >
             {loading ? 'Creating Account...' : `Register as ${formData.role === 'business' ? 'Business' : 'Customer'}`}

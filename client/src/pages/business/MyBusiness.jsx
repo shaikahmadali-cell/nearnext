@@ -105,7 +105,7 @@ const MyBusiness = () => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h1 style={{ fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.25rem' }}>
-              <Store size={28} color="#4f46e5" /> Manage Business Profile
+              <Store size={28} color="#0ea5e9" /> Manage Business Profile
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
               Update store location, category, contact info, operating hours, and media.

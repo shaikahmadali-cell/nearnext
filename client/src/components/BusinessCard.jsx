@@ -15,7 +15,7 @@ const BusinessCard = ({ business }) => {
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-5px)';
-        e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.4)';
+        e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.4)';
         e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
       }}
       onMouseLeave={(e) => {
@@ -34,7 +34,7 @@ const BusinessCard = ({ business }) => {
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to top, rgba(19, 27, 46, 0.9) 0%, transparent 60%)',
+          background: 'linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%)',
         }} />
 
         {/* Category Badge */}
@@ -42,7 +42,7 @@ const BusinessCard = ({ business }) => {
           position: 'absolute',
           top: '12px',
           left: '12px',
-          background: 'rgba(11, 15, 25, 0.8)',
+          background: 'rgba(0, 0, 0, 0.75)',
           backdropFilter: 'blur(6px)',
           color: '#38bdf8',
           padding: '0.25rem 0.65rem',
@@ -62,7 +62,7 @@ const BusinessCard = ({ business }) => {
           width: '54px',
           height: '54px',
           borderRadius: '12px',
-          border: '3px solid #131b2e',
+          border: '3px solid var(--bg-card)',
           overflow: 'hidden',
           background: '#fff',
           boxShadow: 'var(--shadow-md)',
@@ -129,10 +129,10 @@ const BusinessCard = ({ business }) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingTop: '0.75rem',
-          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          borderTop: '1px solid var(--border-glass)',
           marginTop: 'auto',
         }}>
-          <span style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+          <span style={{ fontSize: '0.8rem', color: '#0ea5e9', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
             <Tag size={13} /> Active Deals
           </span>
           <Link
@@ -143,7 +143,7 @@ const BusinessCard = ({ business }) => {
               gap: '0.3rem',
               fontSize: '0.85rem',
               fontWeight: 600,
-              color: '#818cf8',
+              color: '#0ea5e9',
             }}
           >
             Visit Profile <ArrowRight size={14} />

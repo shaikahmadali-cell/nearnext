@@ -66,7 +66,7 @@ function App() {
             density={1.5}
             glowIntensity={0.5}
             saturation={0.8}
-            hueShift={240}
+            hueShift={195}
             transparent={true}
             starSpeed={0.4}
             speed={0.85}

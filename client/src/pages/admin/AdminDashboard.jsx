@@ -50,7 +50,7 @@ const AdminDashboard = () => {
         style={{
           padding: '2.5rem',
           marginBottom: '2.5rem',
-          background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(79, 70, 229, 0.2) 100%)',
+          background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(56, 189, 248, 0.08) 100%)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
         }}
       >
         <div>
-          <span className="badge badge-warning" style={{ marginBottom: '0.5rem' }}>Super Administrator</span>
+          <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>Super Administrator</span>
           <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.4rem' }}>
             System Administration Console
           </h1>
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
               {analytics?.customerCount} customers • {analytics?.businessUserCount} merchants
             </div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(79, 70, 229, 0.15)', color: '#818cf8' }}>
+          <div className="stat-icon" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#0ea5e9' }}>
             <Users size={24} />
           </div>
         </div>
@@ -97,11 +97,11 @@ const AdminDashboard = () => {
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Total Businesses</div>
             <div style={{ fontSize: '2rem', fontWeight: 800, marginTop: '0.25rem' }}>{analytics?.totalBusinesses || 0}</div>
-            <div style={{ fontSize: '0.75rem', color: '#10b981', marginTop: '0.2rem' }}>
+            <div style={{ fontSize: '0.75rem', color: '#0ea5e9', marginTop: '0.2rem' }}>
               {analytics?.approvedBusinesses} approved
             </div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(6, 182, 212, 0.15)', color: '#06b6d4' }}>
+          <div className="stat-icon" style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8' }}>
             <Store size={24} />
           </div>
         </div>
@@ -114,7 +114,7 @@ const AdminDashboard = () => {
               {analytics?.totalOffers} total created
             </div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
+          <div className="stat-icon" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#0ea5e9' }}>
             <Tag size={24} />
           </div>
         </div>
@@ -123,11 +123,11 @@ const AdminDashboard = () => {
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Total Enquiries</div>
             <div style={{ fontSize: '2rem', fontWeight: 800, marginTop: '0.25rem' }}>{analytics?.totalEnquiries || 0}</div>
-            <div style={{ fontSize: '0.75rem', color: '#f59e0b', marginTop: '0.2rem' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
               {analytics?.totalViews || 0} deal views
             </div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b' }}>
+          <div className="stat-icon" style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8' }}>
             <MessageSquare size={24} />
           </div>
         </div>
@@ -140,12 +140,12 @@ const AdminDashboard = () => {
           className="glass-panel"
           style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
         >
-          <Users size={28} color="#818cf8" />
+          <Users size={28} color="#0ea5e9" />
           <h3 style={{ fontSize: '1.15rem', fontWeight: 700 }}>User Management</h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
             Review registered customers, assign business roles, and manage permissions.
           </p>
-          <div style={{ color: '#818cf8', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto' }}>
+          <div style={{ color: '#0ea5e9', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto' }}>
             Open Users <ArrowRight size={14} />
           </div>
         </Link>
@@ -214,12 +214,12 @@ const AdminDashboard = () => {
               <tbody>
                 {analytics.categoriesAggregate.map((cat, idx) => (
                   <tr key={idx}>
-                    <td style={{ fontWeight: 700, color: '#fff' }}>{cat._id || 'Uncategorized'}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--text-main)' }}>{cat._id || 'Uncategorized'}</td>
                     <td>{cat.count} businesses</td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                         <div style={{ width: '120px', height: '8px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-                          <div style={{ width: `${(cat.count / (analytics.totalBusinesses || 1)) * 100}%`, height: '100%', background: '#818cf8' }} />
+                          <div style={{ width: `${(cat.count / (analytics.totalBusinesses || 1)) * 100}%`, height: '100%', background: '#0ea5e9' }} />
                         </div>
                         <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                           {(((cat.count / (analytics.totalBusinesses || 1)) * 100) || 0).toFixed(1)}%

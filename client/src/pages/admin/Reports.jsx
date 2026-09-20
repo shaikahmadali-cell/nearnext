@@ -87,7 +87,7 @@ const AdminReports = () => {
             <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase' }}>
               Audience Engagement
             </div>
-            <div style={{ fontSize: '2.4rem', fontWeight: 800, color: '#818cf8', margin: '0.5rem 0' }}>
+            <div style={{ fontSize: '2.4rem', fontWeight: 800, color: '#0ea5e9', margin: '0.5rem 0' }}>
               {data?.totalViews || 0}
             </div>
             <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>

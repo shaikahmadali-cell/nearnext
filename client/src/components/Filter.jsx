@@ -38,8 +38,8 @@ const Filter = ({ selectedCategory, onSelectCategory, selectedSort, onSelectSort
               onClick={() => onSelectCategory(cat)}
               style={{
                 background: isActive
-                  ? 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)'
-                  : 'rgba(255, 255, 255, 0.05)',
+                  ? 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)'
+                  : 'var(--bg-card)',
                 color: isActive ? '#ffffff' : 'var(--text-muted)',
                 border: isActive ? '1px solid transparent' : '1px solid var(--border-glass)',
                 padding: '0.5rem 1rem',
@@ -49,7 +49,7 @@ const Filter = ({ selectedCategory, onSelectCategory, selectedSort, onSelectSort
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
                 transition: 'all var(--transition-fast)',
-                boxShadow: isActive ? '0 4px 12px rgba(79, 70, 229, 0.35)' : 'none',
+                boxShadow: isActive ? '0 4px 12px rgba(14, 165, 233, 0.35)' : 'none',
                 flexShrink: 0,
               }}
             >

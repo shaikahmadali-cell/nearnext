@@ -79,12 +79,12 @@ const Login = () => {
             width: '48px',
             height: '48px',
             borderRadius: '14px',
-            background: 'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)',
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 1rem',
-            boxShadow: '0 0 25px rgba(79, 70, 229, 0.5)',
+            boxShadow: '0 0 25px rgba(14, 165, 233, 0.5)',
           }}>
             <Lock size={22} color="#fff" />
           </div>
@@ -177,16 +177,16 @@ const Login = () => {
               width: '100%',
               marginTop: '0.5rem',
               padding: '0.85rem',
-              boxShadow: '0 8px 25px rgba(79, 70, 229, 0.4)',
+              boxShadow: '0 8px 25px rgba(14, 165, 233, 0.4)',
             }}
           >
             {loading ? 'Signing In...' : 'Sign In'} <ArrowRight size={16} />
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '1.75rem', fontSize: '0.9rem', color: 'var(--text-muted)', textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}>
+        <div style={{ textAlign: 'center', marginTop: '1.75rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
           Don't have an account?{' '}
-          <Link to="/register" style={{ color: '#a5b4fc', fontWeight: 600 }}>
+          <Link to="/register" style={{ color: '#0ea5e9', fontWeight: 600 }}>
             Sign up free
           </Link>
         </div>

@@ -43,7 +43,7 @@ const SearchBar = ({ onSearch, initialQuery = '', initialLocation = '', placehol
           minWidth: 0,
         }}
       >
-        <Search size={20} color="#818cf8" style={{ flexShrink: 0 }} />
+        <Search size={20} color="#0ea5e9" style={{ flexShrink: 0 }} />
         <input
           type="text"
           value={query}

@@ -95,8 +95,8 @@ const Profile = () => {
                 height: '80px',
                 borderRadius: '50%',
                 objectFit: 'cover',
-                border: '3px solid #6366f1',
-                boxShadow: '0 0 20px rgba(99, 102, 241, 0.4)',
+                border: '3px solid #0ea5e9',
+                boxShadow: '0 0 20px rgba(14, 165, 233, 0.4)',
               }}
             />
           </div>
@@ -113,7 +113,7 @@ const Profile = () => {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.75rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem', borderBottom: '1px solid var(--border-glass)', paddingBottom: '0.75rem', flexWrap: 'wrap' }}>
         <button
           onClick={() => setActiveTab('general')}
           className={`btn ${activeTab === 'general' ? 'btn-primary' : 'btn-secondary'} btn-sm`}
@@ -132,7 +132,7 @@ const Profile = () => {
       {activeTab === 'general' && (
         <form onSubmit={handleUpdateProfile} className="glass-panel" style={{ padding: '2rem' }}>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <User size={20} color="#818cf8" /> Account Information
+            <User size={20} color="#0ea5e9" /> Account Information
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -202,7 +202,7 @@ const Profile = () => {
                         height: '42px',
                         borderRadius: '50%',
                         cursor: 'pointer',
-                        border: avatar === url ? '2px solid #6366f1' : '2px solid transparent',
+                        border: avatar === url ? '2px solid #0ea5e9' : '2px solid transparent',
                         transform: avatar === url ? 'scale(1.1)' : 'scale(1)',
                         transition: 'all 0.2s ease',
                       }}
@@ -225,7 +225,7 @@ const Profile = () => {
       {activeTab === 'security' && (
         <form onSubmit={handleUpdatePassword} className="glass-panel" style={{ padding: '2rem' }}>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Lock size={20} color="#818cf8" /> Change Account Password
+            <Lock size={20} color="#0ea5e9" /> Change Account Password
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

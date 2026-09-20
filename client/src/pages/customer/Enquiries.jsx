@@ -98,14 +98,14 @@ const CustomerEnquiries = () => {
                   style={{
                     padding: '1rem',
                     borderRadius: 'var(--radius-md)',
-                    background: isSelected ? 'rgba(79, 70, 229, 0.2)' : 'rgba(255, 255, 255, 0.02)',
-                    border: isSelected ? '1px solid #4f46e5' : '1px solid var(--border-glass)',
+                    background: isSelected ? 'rgba(14, 165, 233, 0.15)' : 'var(--bg-card)',
+                    border: isSelected ? '1px solid #0ea5e9' : '1px solid var(--border-glass)',
                     cursor: 'pointer',
                     transition: 'all var(--transition-fast)',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.35rem' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#fff' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>
                       {enq.business?.name || 'Local Store'}
                     </div>
                     <span className={`badge ${enq.status === 'resolved' ? 'badge-success' : 'badge-primary'}`} style={{ fontSize: '0.65rem' }}>
@@ -133,14 +133,14 @@ const CustomerEnquiries = () => {
               {/* Header */}
               <div style={{ paddingBottom: '1rem', borderBottom: '1px solid var(--border-glass)', marginBottom: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-                  <Store size={18} color="#06b6d4" />
+                  <Store size={18} color="#0ea5e9" />
                   <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{selectedEnquiry.business?.name}</h3>
                 </div>
                 <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
                   <strong>Subject:</strong> {selectedEnquiry.subject}
                 </div>
                 {selectedEnquiry.offer && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.8rem', color: '#818cf8', marginTop: '0.25rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.8rem', color: '#0ea5e9', marginTop: '0.25rem' }}>
                     <Tag size={13} /> {selectedEnquiry.offer.title} ({selectedEnquiry.offer.discountValue})
                   </div>
                 )}
@@ -150,7 +150,7 @@ const CustomerEnquiries = () => {
               <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem', paddingRight: '0.5rem', marginBottom: '1rem' }}>
                 
                 {/* Initial customer message */}
-                <div style={{ alignSelf: 'flex-start', maxWidth: '85%', background: 'rgba(255, 255, 255, 0.06)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-glass)' }}>
+                <div style={{ alignSelf: 'flex-start', maxWidth: '85%', background: 'var(--bg-card)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-glass)' }}>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', marginBottom: '0.25rem' }}>
                     You • {new Date(selectedEnquiry.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
@@ -166,13 +166,13 @@ const CustomerEnquiries = () => {
                       style={{
                         alignSelf: isBusiness ? 'flex-end' : 'flex-start',
                         maxWidth: '85%',
-                        background: isBusiness ? 'linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(124, 58, 237, 0.25) 100%)' : 'rgba(255, 255, 255, 0.06)',
-                        border: isBusiness ? '1px solid rgba(79, 70, 229, 0.4)' : '1px solid var(--border-glass)',
+                        background: isBusiness ? 'rgba(14, 165, 233, 0.12)' : 'var(--bg-card)',
+                        border: isBusiness ? '1px solid rgba(14, 165, 233, 0.35)' : '1px solid var(--border-glass)',
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
                       }}
                     >
-                      <div style={{ fontSize: '0.75rem', color: isBusiness ? '#a5b4fc' : 'var(--text-subtle)', marginBottom: '0.25rem', fontWeight: 600 }}>
+                      <div style={{ fontSize: '0.75rem', color: isBusiness ? '#0ea5e9' : 'var(--text-subtle)', marginBottom: '0.25rem', fontWeight: 600 }}>
                         {isBusiness ? `Merchant (${selectedEnquiry.business?.name})` : 'You'} • {new Date(rep.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </div>
                       <p style={{ fontSize: '0.9rem', lineHeight: 1.5 }}>{rep.message}</p>

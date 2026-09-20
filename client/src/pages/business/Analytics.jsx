@@ -46,7 +46,7 @@ const Analytics = () => {
           <ArrowLeft size={16} /> Back to Dashboard
         </Link>
         <h1 style={{ fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <BarChart2 size={28} color="#818cf8" /> Promotion & Campaign Analytics
+          <BarChart2 size={28} color="#0ea5e9" /> Promotion & Campaign Analytics
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
           Real-time customer impressions, bookmark conversions, and lead inquiry velocity.
@@ -58,12 +58,12 @@ const Analytics = () => {
         <div className="stat-card">
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Total Views</div>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '0.25rem' }}>
               {data?.totalViews || 0}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#10b981', marginTop: '0.25rem' }}>Deal page impressions</div>
+            <div style={{ fontSize: '0.75rem', color: '#0ea5e9', marginTop: '0.25rem' }}>Deal page impressions</div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(79, 70, 229, 0.15)', color: '#818cf8' }}>
+          <div className="stat-icon" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#0ea5e9' }}>
             <Eye size={26} />
           </div>
         </div>
@@ -71,7 +71,7 @@ const Analytics = () => {
         <div className="stat-card">
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Total Saves</div>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '0.25rem' }}>
               {data?.totalSaves || 0}
             </div>
             <div style={{ fontSize: '0.75rem', color: '#f43f5e', marginTop: '0.25rem' }}>Customer wallet bookmarks</div>
@@ -84,12 +84,12 @@ const Analytics = () => {
         <div className="stat-card">
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Customer Leads</div>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '0.25rem' }}>
               {data?.totalEnquiries || 0}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#06b6d4', marginTop: '0.25rem' }}>Direct inquiries received</div>
+            <div style={{ fontSize: '0.75rem', color: '#38bdf8', marginTop: '0.25rem' }}>Direct inquiries received</div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(6, 182, 212, 0.15)', color: '#06b6d4' }}>
+          <div className="stat-icon" style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8' }}>
             <MessageSquare size={26} />
           </div>
         </div>
@@ -97,12 +97,12 @@ const Analytics = () => {
         <div className="stat-card">
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Lead Rate</div>
-            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#fff', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '0.25rem' }}>
               {data?.conversionRate || '0%'}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#f59e0b', marginTop: '0.25rem' }}>Leads per view ratio</div>
+            <div style={{ fontSize: '0.75rem', color: '#0ea5e9', marginTop: '0.25rem' }}>Leads per view ratio</div>
           </div>
-          <div className="stat-icon" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b' }}>
+          <div className="stat-icon" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#0ea5e9' }}>
             <Percent size={26} />
           </div>
         </div>
@@ -120,31 +120,31 @@ const Analytics = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.4rem' }}>
-                <span style={{ color: '#fbbf24', fontWeight: 600 }}>Pending Review</span>
+                <span style={{ color: '#38bdf8', fontWeight: 600 }}>Pending Review</span>
                 <span style={{ fontWeight: 700 }}>{data?.enquiryStatusBreakdown?.pending || 0}</span>
               </div>
               <div style={{ height: '8px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: `${data?.totalEnquiries ? ((data.enquiryStatusBreakdown?.pending || 0) / data.totalEnquiries) * 100 : 0}%`, height: '100%', background: '#fbbf24' }} />
+                <div style={{ width: `${data?.totalEnquiries ? ((data.enquiryStatusBreakdown?.pending || 0) / data.totalEnquiries) * 100 : 0}%`, height: '100%', background: '#38bdf8' }} />
               </div>
             </div>
 
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.4rem' }}>
-                <span style={{ color: '#818cf8', fontWeight: 600 }}>In Progress / Discussing</span>
+                <span style={{ color: '#0ea5e9', fontWeight: 600 }}>In Progress / Discussing</span>
                 <span style={{ fontWeight: 700 }}>{data?.enquiryStatusBreakdown?.in_progress || 0}</span>
               </div>
               <div style={{ height: '8px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: `${data?.totalEnquiries ? ((data.enquiryStatusBreakdown?.in_progress || 0) / data.totalEnquiries) * 100 : 0}%`, height: '100%', background: '#818cf8' }} />
+                <div style={{ width: `${data?.totalEnquiries ? ((data.enquiryStatusBreakdown?.in_progress || 0) / data.totalEnquiries) * 100 : 0}%`, height: '100%', background: '#0ea5e9' }} />
               </div>
             </div>
 
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.4rem' }}>
-                <span style={{ color: '#34d399', fontWeight: 600 }}>Resolved & Booked</span>
+                <span style={{ color: '#0284c7', fontWeight: 600 }}>Resolved & Booked</span>
                 <span style={{ fontWeight: 700 }}>{data?.enquiryStatusBreakdown?.resolved || 0}</span>
               </div>
               <div style={{ height: '8px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: `${data?.totalEnquiries ? ((data.enquiryStatusBreakdown?.resolved || 0) / data.totalEnquiries) * 100 : 0}%`, height: '100%', background: '#34d399' }} />
+                <div style={{ width: `${data?.totalEnquiries ? ((data.enquiryStatusBreakdown?.resolved || 0) / data.totalEnquiries) * 100 : 0}%`, height: '100%', background: '#0284c7' }} />
               </div>
             </div>
           </div>
@@ -166,17 +166,17 @@ const Analytics = () => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '0.85rem 1rem',
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: 'var(--bg-card)',
                     borderRadius: 'var(--radius-md)',
                     border: '1px solid var(--border-glass)',
                   }}
                 >
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#fff' }}>{o.title}</div>
-                    <div style={{ fontSize: '0.8rem', color: '#818cf8', fontWeight: 600 }}>Code: {o.promoCode}</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>{o.title}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#0ea5e9', fontWeight: 600 }}>Code: {o.promoCode}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#34d399' }}>{o.discountValue}</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0ea5e9' }}>{o.discountValue}</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>
                       {o.viewsCount} views • {o.savesCount} saves
                     </div>

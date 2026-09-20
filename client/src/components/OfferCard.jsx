@@ -54,7 +54,7 @@ const OfferCard = ({ offer, onBookmarkToggle, isBookmarked = false }) => {
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-6px)';
-        e.currentTarget.style.borderColor = 'rgba(79, 70, 229, 0.4)';
+        e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.4)';
         e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
       }}
       onMouseLeave={(e) => {
@@ -136,7 +136,7 @@ const OfferCard = ({ offer, onBookmarkToggle, isBookmarked = false }) => {
           borderRadius: 'var(--radius-full)',
           backdropFilter: 'blur(4px)',
         }}>
-          <Tag size={12} color="#818cf8" />
+          <Tag size={12} color="#0ea5e9" />
           {offer.category}
         </div>
       </div>
@@ -158,7 +158,7 @@ const OfferCard = ({ offer, onBookmarkToggle, isBookmarked = false }) => {
               textDecoration: 'none',
             }}
           >
-            <Store size={14} color="#06b6d4" />
+            <Store size={14} color="#0ea5e9" />
             <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>
               {offer.business.name || 'Local Business'}
             </span>
@@ -211,7 +211,7 @@ const OfferCard = ({ offer, onBookmarkToggle, isBookmarked = false }) => {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', fontWeight: 600 }}>CODE:</span>
-            <span style={{ fontWeight: 800, fontSize: '0.9rem', letterSpacing: '1px', color: '#818cf8' }}>
+            <span style={{ fontWeight: 800, fontSize: '0.9rem', letterSpacing: '1px', color: '#0ea5e9' }}>
               {offer.promoCode || 'DEAL2026'}
             </span>
           </div>

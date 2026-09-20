@@ -49,7 +49,7 @@ const MyOffers = () => {
             <ArrowLeft size={16} /> Back to Dashboard
           </Link>
           <h1 style={{ fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <Tag size={28} color="#818cf8" /> Manage Your Promotions ({offers.length})
+            <Tag size={28} color="#0ea5e9" /> Manage Your Promotions ({offers.length})
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
             Track performance, update details, or launch new discount campaigns.
@@ -63,7 +63,7 @@ const MyOffers = () => {
 
       {offers.length === 0 ? (
         <div className="glass-panel" style={{ textAlign: 'center', padding: '4rem 2rem', borderRadius: 'var(--radius-lg)' }}>
-          <Tag size={48} color="#818cf8" style={{ margin: '0 auto 1rem', opacity: 0.4 }} />
+          <Tag size={48} color="#0ea5e9" style={{ margin: '0 auto 1rem', opacity: 0.6 }} />
           <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.5rem' }}>No offers published yet</h3>
           <p style={{ color: 'var(--text-muted)', maxWidth: '440px', margin: '0 auto 1.5rem' }}>
             Publish your first discount or flash deal to start attracting nearby customers.
@@ -102,7 +102,7 @@ const MyOffers = () => {
                           style={{ width: '48px', height: '48px', borderRadius: '8px', objectFit: 'cover' }}
                         />
                         <div>
-                          <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.95rem' }}>{offer.title}</div>
+                          <div style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '0.95rem' }}>{offer.title}</div>
                           <div style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>
                             Created on {new Date(offer.createdAt).toLocaleDateString()}
                           </div>
@@ -121,7 +121,7 @@ const MyOffers = () => {
                     </td>
 
                     <td>
-                      <span style={{ fontWeight: 800, color: '#818cf8', letterSpacing: '0.5px' }}>{offer.promoCode}</span>
+                      <span style={{ fontWeight: 800, color: '#0ea5e9', letterSpacing: '0.5px' }}>{offer.promoCode}</span>
                     </td>
 
                     <td style={{ fontSize: '0.85rem', color: isExpired ? '#f87171' : 'var(--text-muted)' }}>
