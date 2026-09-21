@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, MapPin, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { Search, MapPin, ArrowRight, Loader2, AlertCircle, Navigation } from 'lucide-react';
 import api from '../utils/api';
 
 const SearchBar = ({
@@ -13,6 +13,8 @@ const SearchBar = ({
   const [isDetecting, setIsDetecting] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const [isError, setIsError] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
   // Sync initial query prop changes
@@ -22,7 +24,7 @@ const SearchBar = ({
     }
   }, [initialQuery]);
 
-  // Restore saved location from localStorage on mount if initialLocation is empty
+  // Restore saved location from localStorage on mount (DO NOT request GPS on load)
   useEffect(() => {
     if (initialLocation) {
       setLocation(initialLocation);
@@ -31,7 +33,7 @@ const SearchBar = ({
         const savedLoc = localStorage.getItem('nearnest-location');
         if (savedLoc) {
           const parsed = JSON.parse(savedLoc);
-          const locText = parsed.displayName || parsed.city || parsed.postalCode || '';
+          const locText = parsed.displayName || parsed.city || parsed.postcode || parsed.postalCode || '';
           if (locText) {
             setLocation(locText);
           }
@@ -42,298 +44,206 @@ const SearchBar = ({
     }
   }, [initialLocation]);
 
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   // Temporary status message dismissal
   useEffect(() => {
     if (statusMessage) {
       const timer = setTimeout(() => {
         setStatusMessage('');
-      }, 4000);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [statusMessage]);
 
-  // Helper to detect location from IP fallback
-  const detectLocationByIP = async () => {
-    try {
-      // Try backend IP detection
-      try {
-        const res = await api.get('/location/ip');
-        if (res.data?.success && res.data?.data?.displayName) {
-          return {
-            formattedText: res.data.data.displayName,
-            locData: res.data.data,
-          };
-        }
-      } catch (e) {
-        // Backend not available, continue to direct client request
-      }
-
-      // Direct client IP reverse geocoding via BigDataCloud
-      const ipRes = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client');
-      if (ipRes.ok) {
-        const ipData = await ipRes.json();
-        const city = ipData.city || ipData.locality || '';
-        const state = ipData.principalSubdivision || '';
-        const postalCode = ipData.postcode || '';
-        const country = ipData.countryName || '';
-        const formattedText = city && state ? `${city}, ${state}` : city || state || country || 'Current Location';
-        const locData = {
-          city,
-          state,
-          postalCode,
-          country,
-          displayName: formattedText,
-          latitude: ipData.latitude,
-          longitude: ipData.longitude,
-        };
-        return { formattedText, locData };
-      }
-    } catch (err) {
-      console.warn('IP location detection failed:', err);
-    }
-    return null;
-  };
-
-  // Reverse geocode coordinates using multi-tier resolution (Backend -> BigDataCloud -> Nominatim)
-  const reverseGeocodeCoords = async (latitude, longitude) => {
-    let locData = null;
+  // Reverse geocode REAL coordinates via Nominatim and Backend
+  const reverseGeocodeRealCoords = async (latitude, longitude) => {
+    console.log("Reverse geocoding location...");
+    let data = null;
+    let city = '';
+    let state = '';
+    let postcode = '';
+    let country = '';
     let formattedText = '';
 
-    // Tier 1: Backend endpoint
+    // 1. Try direct OpenStreetMap Nominatim request with real coordinates
     try {
-      const res = await api.get(`/location/reverse-geocode?lat=${latitude}&lng=${longitude}`);
-      if (res.data?.success && res.data?.data) {
-        locData = res.data.data;
-        formattedText = locData.displayName || (locData.city ? `${locData.city}${locData.state ? `, ${locData.state}` : ''}` : '');
+      const nomRes = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`,
+        { headers: { Accept: 'application/json' } }
+      );
+      if (nomRes.ok) {
+        data = await nomRes.json();
+        console.log("Detected address:", data);
+        const address = data.address || {};
+        city =
+          address.city ||
+          address.town ||
+          address.village ||
+          address.municipality ||
+          address.county ||
+          address.state_district ||
+          address.suburb ||
+          '';
+        state = address.state || address.region || '';
+        postcode = address.postcode || address.postal_code || '';
+        country = address.country || '';
       }
-    } catch (backendErr) {
-      console.warn('Backend reverse geocoding unavailable, using direct client resolution:', backendErr.message);
+    } catch (nomErr) {
+      console.warn('Nominatim direct request failed:', nomErr.message);
     }
 
-    // Tier 2: Direct BigDataCloud reverse geocoding
-    if (!formattedText) {
+    // 2. Fallback to backend reverse geocode if Nominatim direct call failed
+    if (!city && !state) {
       try {
-        const bdcRes = await fetch(
-          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-        );
-        if (bdcRes.ok) {
-          const bdcData = await bdcRes.json();
-          const city = bdcData.city || bdcData.locality || '';
-          const state = bdcData.principalSubdivision || '';
-          const postalCode = bdcData.postcode || '';
-          const country = bdcData.countryName || '';
-
-          if (city && state) {
-            formattedText = `${city}, ${state}`;
-          } else if (city) {
-            formattedText = city;
-          } else if (state) {
-            formattedText = state;
-          }
-
-          if (formattedText) {
-            locData = {
-              city,
-              state,
-              postalCode,
-              country,
-              displayName: formattedText,
-              latitude,
-              longitude,
-            };
-          }
+        const res = await api.get(`/location/reverse-geocode?lat=${latitude}&lng=${longitude}`);
+        if (res.data?.success && res.data?.data) {
+          const locData = res.data.data;
+          city = locData.city || '';
+          state = locData.state || '';
+          postcode = locData.postcode || '';
+          country = locData.country || '';
+          formattedText = locData.displayName || '';
         }
-      } catch (bdcErr) {
-        console.warn('BigDataCloud direct resolution failed:', bdcErr.message);
+      } catch (backendErr) {
+        console.warn('Backend reverse-geocode failed:', backendErr.message);
       }
     }
 
-    // Tier 3: Nominatim OpenStreetMap fallback
+    // Format display string
     if (!formattedText) {
-      try {
-        const nomRes = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`,
-          { headers: { Accept: 'application/json' } }
-        );
-        if (nomRes.ok) {
-          const data = await nomRes.json();
-          const addr = data.address || {};
-          const city =
-            addr.city ||
-            addr.town ||
-            addr.village ||
-            addr.suburb ||
-            addr.municipality ||
-            addr.county ||
-            addr.state_district ||
-            '';
-          const state = addr.state || addr.region || '';
-          const postalCode = addr.postcode || '';
-          const country = addr.country || '';
-
-          if (city && state) {
-            formattedText = `${city}, ${state}`;
-          } else if (city) {
-            formattedText = city;
-          } else if (state && postalCode) {
-            formattedText = `${postalCode}, ${state}`;
-          } else if (postalCode) {
-            formattedText = postalCode;
-          } else if (data.name) {
-            formattedText = data.name;
-          }
-
-          if (formattedText) {
-            locData = {
-              city,
-              state,
-              postalCode,
-              country,
-              displayName: formattedText,
-              latitude,
-              longitude,
-            };
-          }
-        }
-      } catch (nomErr) {
-        console.warn('Nominatim fallback failed:', nomErr.message);
+      if (city && state) {
+        formattedText = `${city}, ${state}`;
+      } else if (city) {
+        formattedText = city;
+      } else if (state && postcode) {
+        formattedText = `${postcode}, ${state}`;
+      } else if (postcode) {
+        formattedText = postcode;
+      } else if (state) {
+        formattedText = state;
+      } else {
+        formattedText = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
       }
     }
 
-    // Tier 4: IP Location Fallback
-    if (!formattedText) {
-      const ipResult = await detectLocationByIP();
-      if (ipResult) {
-        formattedText = ipResult.formattedText;
-        locData = ipResult.locData;
-      }
-    }
+    const locPayload = {
+      city,
+      state,
+      postcode,
+      country,
+      latitude,
+      longitude,
+      displayName: formattedText,
+    };
 
-    if (!formattedText) {
-      formattedText = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
-      locData = { displayName: formattedText, latitude, longitude };
-    }
-
-    return { formattedText, locData };
+    return { formattedText, locPayload };
   };
 
-  // Trigger location detection
-  const handleDetectLocation = (e) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
+  // Trigger real browser GPS location
+  const handleUseCurrentLocation = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (e && e.stopPropagation) e.stopPropagation();
+
+    setShowDropdown(false);
+
+    if (!navigator.geolocation) {
+      setIsError(true);
+      setStatusMessage('Geolocation is not supported by your browser. Please enter your city/ZIP manually.');
+      return;
     }
-    if (e && e.stopPropagation) {
-      e.stopPropagation();
+
+    // Check permissions API if supported
+    if (navigator.permissions && navigator.permissions.query) {
+      try {
+        const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+        if (permissionStatus.state === 'denied') {
+          setIsError(true);
+          setStatusMessage('Location permission is blocked. Please enable location permission in your browser settings or enter your city/ZIP manually.');
+          return;
+        }
+      } catch (permErr) {
+        // Proceed to getCurrentPosition
+      }
     }
 
     setIsDetecting(true);
     setStatusMessage('');
     setIsError(false);
 
-    // If browser doesn't support geolocation, fallback to IP detection
-    if (!navigator.geolocation) {
-      detectLocationByIP().then((result) => {
-        setIsDetecting(false);
-        if (result && result.formattedText) {
-          setLocation(result.formattedText);
-          try {
-            localStorage.setItem('nearnest-location', JSON.stringify(result.locData));
-          } catch (err) {}
-        } else {
-          setIsError(true);
-          setStatusMessage('Unable to detect location. Please enter your city or ZIP manually.');
-        }
-      });
-      return;
-    }
+    console.log("Requesting browser location...");
 
-    // Call browser Geolocation API
     navigator.geolocation.getCurrentPosition(
       async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        console.log("GPS latitude:", latitude);
+        console.log("GPS longitude:", longitude);
+
         try {
-          const { latitude, longitude } = position.coords;
-          const { formattedText, locData } = await reverseGeocodeCoords(latitude, longitude);
+          const { formattedText, locPayload } = await reverseGeocodeRealCoords(latitude, longitude);
 
           setLocation(formattedText);
           setIsError(false);
           setStatusMessage('');
 
-          // Save to localStorage
+          // Save selected location to localStorage
           try {
             localStorage.setItem(
               'nearnest-location',
-              JSON.stringify(
-                locData || {
-                  city: formattedText,
-                  displayName: formattedText,
-                  latitude,
-                  longitude,
-                }
-              )
+              JSON.stringify({
+                city: locPayload.city || formattedText,
+                state: locPayload.state || '',
+                postcode: locPayload.postcode || '',
+                latitude,
+                longitude,
+                displayName: formattedText,
+              })
             );
           } catch (storageErr) {
-            console.error('LocalStorage write error:', storageErr);
+            console.error('LocalStorage save error:', storageErr);
           }
         } catch (err) {
-          console.error('Location detection error:', err);
-          // Try IP fallback
-          const ipResult = await detectLocationByIP();
-          if (ipResult && ipResult.formattedText) {
-            setLocation(ipResult.formattedText);
-            try {
-              localStorage.setItem('nearnest-location', JSON.stringify(ipResult.locData));
-            } catch (storageErr) {}
-          } else {
-            setIsError(true);
-            setStatusMessage('Unable to detect your location. Please enter your city or ZIP.');
-          }
+          console.error('Reverse geocoding error:', err);
+          setIsError(true);
+          setStatusMessage('Your location could not be determined. Please try again.');
         } finally {
           setIsDetecting(false);
         }
       },
-      async (error) => {
-        console.warn('Geolocation error:', error.message, '- attempting IP location fallback...');
-        
-        // Fallback to IP geolocation so desktop/laptops or permission-denied users get their actual location
-        try {
-          const ipResult = await detectLocationByIP();
-          if (ipResult && ipResult.formattedText) {
-            setLocation(ipResult.formattedText);
-            setIsDetecting(false);
-            setIsError(false);
-            try {
-              localStorage.setItem('nearnest-location', JSON.stringify(ipResult.locData));
-            } catch (storageErr) {}
-            return;
-          }
-        } catch (ipErr) {
-          console.error('IP fallback failed:', ipErr);
-        }
-
+      (error) => {
         setIsDetecting(false);
         setIsError(true);
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            setStatusMessage('Location permission denied. Please enter your city or ZIP manually.');
-            break;
-          case error.POSITION_UNAVAILABLE:
-            setStatusMessage('Unable to detect your location. Please enter your city or ZIP.');
-            break;
-          case error.TIMEOUT:
-            setStatusMessage('Location detection timed out. Please try again.');
-            break;
-          default:
-            setStatusMessage('Unable to detect your location. Please enter your city or ZIP.');
-            break;
+        console.warn('Geolocation error code:', error.code, error.message);
+
+        if (error.code === 1) {
+          setStatusMessage('Location permission denied. Please allow location access to find your current location.');
+        } else if (error.code === 2) {
+          setStatusMessage('Your location could not be determined. Please try again.');
+        } else if (error.code === 3) {
+          setStatusMessage('Location request timed out. Please try again.');
+        } else {
+          setStatusMessage('Your location could not be determined. Please try again.');
         }
+
         if (inputRef.current) {
           inputRef.current.focus();
         }
       },
       {
         enableHighAccuracy: true,
-        timeout: 8000,
-        maximumAge: 60000,
+        timeout: 15000,
+        maximumAge: 0,
       }
     );
   };
@@ -360,13 +270,14 @@ const SearchBar = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setShowDropdown(false);
     if (onSearch) {
       onSearch({ query, location });
     }
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: '100%' }}>
+    <div ref={dropdownRef} style={{ position: 'relative', width: '100%', maxWidth: '100%' }}>
       <form
         onSubmit={handleSubmit}
         className="search-bar-form"
@@ -403,7 +314,7 @@ const SearchBar = ({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
-            aria-label="Search keywords"
+            aria-label="Search restaurants, spas, gyms, discounts..."
             style={{
               background: 'transparent',
               border: 'none',
@@ -432,23 +343,16 @@ const SearchBar = ({
             flex: '1 1 180px',
             padding: '0.5rem 0.85rem',
             minWidth: 0,
-            cursor: 'pointer',
             position: 'relative',
-          }}
-          onClick={(e) => {
-            // When clicking the location group or placeholder, trigger location detection
-            if (!location && !isDetecting) {
-              handleDetectLocation(e);
-            }
           }}
         >
           {/* Location Trigger Pin Button */}
           <button
             type="button"
-            onClick={handleDetectLocation}
+            onClick={handleUseCurrentLocation}
             disabled={isDetecting}
             aria-label="Use current location"
-            title="Click to detect current location"
+            title="Click to detect current GPS location"
             style={{
               background: 'none',
               border: 'none',
@@ -473,21 +377,21 @@ const SearchBar = ({
           <input
             ref={inputRef}
             type="text"
-            value={isDetecting ? 'Detecting location...' : location}
+            value={isDetecting ? 'Detecting your location...' : location}
             onChange={handleLocationChange}
-            onClick={(e) => {
-              // Clicking the empty input field triggers location detection
-              if (!location && !isDetecting) {
-                handleDetectLocation(e);
-              }
+            onFocus={() => {
+              if (!isDetecting) setShowDropdown(true);
             }}
-            placeholder={isDetecting ? 'Detecting location...' : 'City or Zip'}
+            onClick={() => {
+              if (!isDetecting) setShowDropdown(true);
+            }}
+            placeholder={isDetecting ? 'Detecting your location...' : 'City or Zip'}
             aria-label="City or Zip"
             disabled={isDetecting}
             style={{
               background: 'transparent',
               border: 'none',
-              color: isDetecting ? 'var(--text-muted)' : 'var(--text-main)',
+              color: isDetecting ? '#38bdf8' : 'var(--text-main)',
               fontSize: '0.95rem',
               width: '100%',
               outline: 'none',
@@ -513,7 +417,66 @@ const SearchBar = ({
         </button>
       </form>
 
-      {/* Non-intrusive status / error message */}
+      {/* "Use Current Location" Dropdown Action */}
+      {showDropdown && !isDetecting && (
+        <div
+          className="location-dropdown-panel"
+          style={{
+            position: 'absolute',
+            top: 'calc(100% + 6px)',
+            right: 0,
+            width: '100%',
+            maxWidth: '340px',
+            background: 'rgba(19, 27, 46, 0.96)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(14, 165, 233, 0.3)',
+            borderRadius: 'var(--radius-md)',
+            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.6)',
+            padding: '0.4rem',
+            zIndex: 100,
+            animation: 'fadeIn 0.15s ease-out',
+          }}
+        >
+          <button
+            type="button"
+            onClick={handleUseCurrentLocation}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              width: '100%',
+              padding: '0.75rem 1rem',
+              background: 'rgba(14, 165, 233, 0.08)',
+              border: '1px solid rgba(14, 165, 233, 0.2)',
+              borderRadius: 'var(--radius-sm)',
+              color: '#38bdf8',
+              fontSize: '0.92rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              textAlign: 'left',
+              transition: 'background var(--transition-fast), border-color var(--transition-fast)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(14, 165, 233, 0.2)';
+              e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(14, 165, 233, 0.08)';
+              e.currentTarget.style.borderColor = 'rgba(14, 165, 233, 0.2)';
+            }}
+          >
+            <Navigation size={18} color="#0ea5e9" style={{ flexShrink: 0 }} />
+            <div>
+              <div style={{ color: '#ffffff', fontWeight: 600 }}>Use Current Location</div>
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.78rem', fontWeight: 400, marginTop: '2px' }}>
+                Detect exact neighborhood via GPS
+              </div>
+            </div>
+          </button>
+        </div>
+      )}
+
+      {/* User-friendly status / error message */}
       {statusMessage && (
         <div
           role="status"
@@ -522,7 +485,7 @@ const SearchBar = ({
             alignItems: 'center',
             gap: '0.5rem',
             marginTop: '0.5rem',
-            padding: '0.35rem 0.85rem',
+            padding: '0.4rem 0.9rem',
             borderRadius: 'var(--radius-sm)',
             background: isError ? 'rgba(239, 68, 68, 0.15)' : 'rgba(14, 165, 233, 0.15)',
             border: `1px solid ${isError ? 'rgba(239, 68, 68, 0.3)' : 'rgba(14, 165, 233, 0.3)'}`,
@@ -542,16 +505,12 @@ const SearchBar = ({
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        @keyframes subtlePulse {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.15); opacity: 0.7; }
-        }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(-4px); }
           to { opacity: 1; transform: translateY(0); }
         }
         .location-pin-icon:hover {
-          transform: scale(1.15);
+          transform: scale(1.18);
         }
         @media (min-width: 640px) {
           .search-divider { display: block !important; }
@@ -565,6 +524,9 @@ const SearchBar = ({
           .search-input-group {
             flex: 1 1 100% !important;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          }
+          .location-dropdown-panel {
+            max-width: 100% !important;
           }
         }
       `}</style>
