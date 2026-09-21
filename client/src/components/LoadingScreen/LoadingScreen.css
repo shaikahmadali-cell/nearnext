@@ -1,0 +1,101 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-main, #050505);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1), visibility 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+  user-select: none;
+  overflow: hidden;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-screen-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.loading-video {
+  width: 220px;
+  height: 220px;
+  max-width: 70vw;
+  max-height: 70vw;
+  object-fit: contain;
+  pointer-events: none;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+}
+
+/* For light mode, make screen blending adapt or preserve clear render */
+[data-theme='light'] .loading-video,
+html.light .loading-video {
+  mix-blend-mode: normal;
+}
+
+.loading-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.loading-logo-text {
+  font-family: var(--font-heading, 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-main, #ffffff);
+}
+
+.loading-tagline {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted, #94a3b8);
+  letter-spacing: 0.5px;
+}
+
+.loading-fallback-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(14, 165, 233, 0.2);
+  border-top-color: #0ea5e9;
+  border-radius: 50%;
+  animation: spinLoader 0.9s linear infinite;
+}
+
+@keyframes spinLoader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen {
+    transition: none !important;
+  }
+  .loading-video {
+    animation: none !important;
+  }
+  .loading-fallback-spinner {
+    animation: none !important;
+    border-top-color: #0ea5e9;
+  }
+}

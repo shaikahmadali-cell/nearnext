@@ -6,8 +6,10 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import Galaxy from './components/Galaxy';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import { ToastProvider } from './context/ToastContext';
 import { useTheme } from './context/ThemeContext';
+import { useAuth } from './context/AuthContext';
 
 // Public Pages
 import Home from './pages/Home';
@@ -42,9 +44,13 @@ import AdminReports from './pages/admin/Reports';
 
 function App() {
   const { theme } = useTheme();
+  const { loading: authLoading } = useAuth();
 
   return (
     <ToastProvider>
+      {/* Global Initial / Page Reload MP4 Loading Screen */}
+      <LoadingScreen isLoading={authLoading} />
+
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative' }}>
         {/* Global WebGL Galaxy Background for All Pages */}
         <div
