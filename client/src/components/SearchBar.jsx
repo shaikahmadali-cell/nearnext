@@ -47,17 +47,59 @@ const SearchBar = ({
     if (statusMessage) {
       const timer = setTimeout(() => {
         setStatusMessage('');
-      }, 5000);
+      }, 4000);
       return () => clearTimeout(timer);
     }
   }, [statusMessage]);
 
-  // Reverse geocode coordinates using backend with client fallback
+  // Helper to detect location from IP fallback
+  const detectLocationByIP = async () => {
+    try {
+      // Try backend IP detection
+      try {
+        const res = await api.get('/location/ip');
+        if (res.data?.success && res.data?.data?.displayName) {
+          return {
+            formattedText: res.data.data.displayName,
+            locData: res.data.data,
+          };
+        }
+      } catch (e) {
+        // Backend not available, continue to direct client request
+      }
+
+      // Direct client IP reverse geocoding via BigDataCloud
+      const ipRes = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client');
+      if (ipRes.ok) {
+        const ipData = await ipRes.json();
+        const city = ipData.city || ipData.locality || '';
+        const state = ipData.principalSubdivision || '';
+        const postalCode = ipData.postcode || '';
+        const country = ipData.countryName || '';
+        const formattedText = city && state ? `${city}, ${state}` : city || state || country || 'Current Location';
+        const locData = {
+          city,
+          state,
+          postalCode,
+          country,
+          displayName: formattedText,
+          latitude: ipData.latitude,
+          longitude: ipData.longitude,
+        };
+        return { formattedText, locData };
+      }
+    } catch (err) {
+      console.warn('IP location detection failed:', err);
+    }
+    return null;
+  };
+
+  // Reverse geocode coordinates using multi-tier resolution (Backend -> BigDataCloud -> Nominatim)
   const reverseGeocodeCoords = async (latitude, longitude) => {
     let locData = null;
     let formattedText = '';
 
-    // Option A & B: Backend endpoint
+    // Tier 1: Backend endpoint
     try {
       const res = await api.get(`/location/reverse-geocode?lat=${latitude}&lng=${longitude}`);
       if (res.data?.success && res.data?.data) {
@@ -65,10 +107,48 @@ const SearchBar = ({
         formattedText = locData.displayName || (locData.city ? `${locData.city}${locData.state ? `, ${locData.state}` : ''}` : '');
       }
     } catch (backendErr) {
-      console.warn('Backend reverse geocoding unavailable, falling back to direct service:', backendErr.message);
+      console.warn('Backend reverse geocoding unavailable, using direct client resolution:', backendErr.message);
     }
 
-    // Option C: OpenStreetMap Nominatim fallback
+    // Tier 2: Direct BigDataCloud reverse geocoding
+    if (!formattedText) {
+      try {
+        const bdcRes = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+        );
+        if (bdcRes.ok) {
+          const bdcData = await bdcRes.json();
+          const city = bdcData.city || bdcData.locality || '';
+          const state = bdcData.principalSubdivision || '';
+          const postalCode = bdcData.postcode || '';
+          const country = bdcData.countryName || '';
+
+          if (city && state) {
+            formattedText = `${city}, ${state}`;
+          } else if (city) {
+            formattedText = city;
+          } else if (state) {
+            formattedText = state;
+          }
+
+          if (formattedText) {
+            locData = {
+              city,
+              state,
+              postalCode,
+              country,
+              displayName: formattedText,
+              latitude,
+              longitude,
+            };
+          }
+        }
+      } catch (bdcErr) {
+        console.warn('BigDataCloud direct resolution failed:', bdcErr.message);
+      }
+    }
+
+    // Tier 3: Nominatim OpenStreetMap fallback
     if (!formattedText) {
       try {
         const nomRes = await fetch(
@@ -101,22 +181,31 @@ const SearchBar = ({
             formattedText = postalCode;
           } else if (data.name) {
             formattedText = data.name;
-          } else {
-            formattedText = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
           }
 
-          locData = {
-            city,
-            state,
-            postalCode,
-            country,
-            displayName: formattedText,
-            latitude,
-            longitude,
-          };
+          if (formattedText) {
+            locData = {
+              city,
+              state,
+              postalCode,
+              country,
+              displayName: formattedText,
+              latitude,
+              longitude,
+            };
+          }
         }
       } catch (nomErr) {
         console.warn('Nominatim fallback failed:', nomErr.message);
+      }
+    }
+
+    // Tier 4: IP Location Fallback
+    if (!formattedText) {
+      const ipResult = await detectLocationByIP();
+      if (ipResult) {
+        formattedText = ipResult.formattedText;
+        locData = ipResult.locData;
       }
     }
 
@@ -128,23 +217,37 @@ const SearchBar = ({
     return { formattedText, locData };
   };
 
-  // Trigger browser geolocation
+  // Trigger location detection
   const handleDetectLocation = (e) => {
-    if (e) {
+    if (e && e.preventDefault) {
       e.preventDefault();
-      e.stopPropagation();
     }
-
-    if (!navigator.geolocation) {
-      setIsError(true);
-      setStatusMessage('Geolocation is not supported by your browser. Please enter your city or ZIP.');
-      return;
+    if (e && e.stopPropagation) {
+      e.stopPropagation();
     }
 
     setIsDetecting(true);
     setStatusMessage('');
     setIsError(false);
 
+    // If browser doesn't support geolocation, fallback to IP detection
+    if (!navigator.geolocation) {
+      detectLocationByIP().then((result) => {
+        setIsDetecting(false);
+        if (result && result.formattedText) {
+          setLocation(result.formattedText);
+          try {
+            localStorage.setItem('nearnest-location', JSON.stringify(result.locData));
+          } catch (err) {}
+        } else {
+          setIsError(true);
+          setStatusMessage('Unable to detect location. Please enter your city or ZIP manually.');
+        }
+      });
+      return;
+    }
+
+    // Call browser Geolocation API
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
@@ -173,13 +276,40 @@ const SearchBar = ({
           }
         } catch (err) {
           console.error('Location detection error:', err);
-          setIsError(true);
-          setStatusMessage('Unable to detect your location. Please enter your city or ZIP.');
+          // Try IP fallback
+          const ipResult = await detectLocationByIP();
+          if (ipResult && ipResult.formattedText) {
+            setLocation(ipResult.formattedText);
+            try {
+              localStorage.setItem('nearnest-location', JSON.stringify(ipResult.locData));
+            } catch (storageErr) {}
+          } else {
+            setIsError(true);
+            setStatusMessage('Unable to detect your location. Please enter your city or ZIP.');
+          }
         } finally {
           setIsDetecting(false);
         }
       },
-      (error) => {
+      async (error) => {
+        console.warn('Geolocation error:', error.message, '- attempting IP location fallback...');
+        
+        // Fallback to IP geolocation so desktop/laptops or permission-denied users get their actual location
+        try {
+          const ipResult = await detectLocationByIP();
+          if (ipResult && ipResult.formattedText) {
+            setLocation(ipResult.formattedText);
+            setIsDetecting(false);
+            setIsError(false);
+            try {
+              localStorage.setItem('nearnest-location', JSON.stringify(ipResult.locData));
+            } catch (storageErr) {}
+            return;
+          }
+        } catch (ipErr) {
+          console.error('IP fallback failed:', ipErr);
+        }
+
         setIsDetecting(false);
         setIsError(true);
         switch (error.code) {
@@ -202,7 +332,7 @@ const SearchBar = ({
       },
       {
         enableHighAccuracy: true,
-        timeout: 10000,
+        timeout: 8000,
         maximumAge: 60000,
       }
     );
@@ -306,8 +436,8 @@ const SearchBar = ({
             position: 'relative',
           }}
           onClick={(e) => {
-            // If clicking the group container or icon when not detecting, focus or trigger
-            if (!location && !isDetecting && e.target.tagName !== 'INPUT') {
+            // When clicking the location group or placeholder, trigger location detection
+            if (!location && !isDetecting) {
               handleDetectLocation(e);
             }
           }}
@@ -318,7 +448,7 @@ const SearchBar = ({
             onClick={handleDetectLocation}
             disabled={isDetecting}
             aria-label="Use current location"
-            title="Click to use current GPS location"
+            title="Click to detect current location"
             style={{
               background: 'none',
               border: 'none',
@@ -345,6 +475,12 @@ const SearchBar = ({
             type="text"
             value={isDetecting ? 'Detecting location...' : location}
             onChange={handleLocationChange}
+            onClick={(e) => {
+              // Clicking the empty input field triggers location detection
+              if (!location && !isDetecting) {
+                handleDetectLocation(e);
+              }
+            }}
             placeholder={isDetecting ? 'Detecting location...' : 'City or Zip'}
             aria-label="City or Zip"
             disabled={isDetecting}
