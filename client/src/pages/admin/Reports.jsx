@@ -103,13 +103,13 @@ const AdminReports = () => {
           </h2>
           <div style={{ color: 'var(--text-muted)', lineHeight: 1.8, fontSize: '0.95rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <p>
-              • <strong>Hyperlocal Growth:</strong> LocalPulse has successfully connected {data?.totalUsers} registered community members with {data?.totalBusinesses} registered storefronts across local dining, beauty, automotive, and fitness sectors.
+              • <strong>Hyperlocal Growth:</strong> NearNest has successfully connected {data?.totalUsers || 0} registered community members with {data?.totalBusinesses || 0} registered storefronts across local dining, beauty, automotive, and fitness sectors.
             </p>
             <p>
-              • <strong>Promotion Velocity:</strong> A total of {data?.totalOffers} discount campaigns have been staged, driving {data?.totalViews} total impressions and {data?.totalEnquiries} high-intent customer inquiries directly to merchants.
+              • <strong>Promotion Velocity:</strong> A total of {data?.totalOffers || 0} discount campaigns have been staged, driving {data?.totalViews || 0} total impressions and {data?.totalEnquiries || 0} high-intent customer inquiries directly to merchants.
             </p>
             <p>
-              • <strong>Merchant Satisfaction:</strong> Verified status accounts demonstrate a 4.8+ average community rating with zero reported abuse violations across the network.
+              • <strong>Merchant Moderation:</strong> Verified status accounts operate with active moderation and zero reported abuse violations across the network.
             </p>
           </div>
         </div>
