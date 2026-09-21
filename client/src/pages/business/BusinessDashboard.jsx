@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
 import businessService from '../../services/businessService';
+import ScrollFloat from '../../components/ScrollFloat/ScrollFloat';
 import { Spinner } from '../../components/Loading';
 import {
   Store,
@@ -267,7 +268,18 @@ const BusinessDashboard = () => {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: 800 }}>Top Performing Offers</h2>
+            <ScrollFloat
+              as="h2"
+              animationDuration={0.9}
+              ease="back.out(1.7)"
+              scrollStart="top 90%"
+              scrollEnd="bottom 60%"
+              stagger={0.025}
+              textClassName="nearnest-scroll-heading"
+              style={{ fontSize: '1.45rem', fontWeight: 800 }}
+            >
+              Top Performing Offers
+            </ScrollFloat>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Deals generating highest engagement</p>
           </div>
           <Link to="/business/analytics" style={{ color: '#0ea5e9', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>

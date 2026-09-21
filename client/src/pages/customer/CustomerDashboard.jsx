@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import offerService from '../../services/offerService';
 import enquiryService from '../../services/enquiryService';
 import OfferCard from '../../components/OfferCard';
+import ScrollFloat from '../../components/ScrollFloat/ScrollFloat';
 import { Spinner } from '../../components/Loading';
 import {
   Heart,
@@ -123,7 +124,18 @@ const CustomerDashboard = () => {
       <div style={{ marginBottom: '3.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: 800 }}>Saved Deals & Coupons</h2>
+            <ScrollFloat
+              as="h2"
+              animationDuration={0.9}
+              ease="back.out(1.7)"
+              scrollStart="top 90%"
+              scrollEnd="bottom 60%"
+              stagger={0.025}
+              textClassName="nearnest-scroll-heading"
+              style={{ fontSize: '1.45rem', fontWeight: 800 }}
+            >
+              Saved Deals & Coupons
+            </ScrollFloat>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Deals you bookmarked for later redemption</p>
           </div>
           <Link to="/customer/saved" style={{ color: '#0ea5e9', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -155,7 +167,18 @@ const CustomerDashboard = () => {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: 800 }}>Recent Merchant Conversations</h2>
+            <ScrollFloat
+              as="h2"
+              animationDuration={0.9}
+              ease="back.out(1.7)"
+              scrollStart="top 90%"
+              scrollEnd="bottom 60%"
+              stagger={0.025}
+              textClassName="nearnest-scroll-heading"
+              style={{ fontSize: '1.45rem', fontWeight: 800 }}
+            >
+              Recent Merchant Conversations
+            </ScrollFloat>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Track questions sent to local store owners</p>
           </div>
           <Link to="/customer/enquiries" style={{ color: '#0ea5e9', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>

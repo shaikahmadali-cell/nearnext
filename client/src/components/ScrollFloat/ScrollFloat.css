@@ -1,0 +1,42 @@
+.scroll-float {
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+.scroll-float-text {
+  display: inline-block;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: inherit;
+  letter-spacing: inherit;
+}
+
+.nearnest-scroll-heading {
+  font-family: var(--font-heading, 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif);
+  color: var(--text-main, #ffffff);
+}
+
+.scroll-float-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.scroll-float-space {
+  display: inline-block;
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  .char {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

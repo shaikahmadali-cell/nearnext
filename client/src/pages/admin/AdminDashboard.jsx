@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
+import ScrollFloat from '../../components/ScrollFloat/ScrollFloat';
 import { Spinner } from '../../components/Loading';
 import {
   ShieldAlert,
@@ -60,9 +61,18 @@ const AdminDashboard = () => {
       >
         <div>
           <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>Super Administrator</span>
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.4rem' }}>
+          <ScrollFloat
+            as="h1"
+            animationDuration={0.9}
+            ease="back.out(1.7)"
+            scrollStart="top 90%"
+            scrollEnd="bottom 60%"
+            stagger={0.025}
+            textClassName="nearnest-scroll-heading"
+            style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.4rem' }}
+          >
             System Administration Console
-          </h1>
+          </ScrollFloat>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
             Platform health, merchant verifications, active promotion moderation, and user governance.
           </p>

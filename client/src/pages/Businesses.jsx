@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import BusinessCard from '../components/BusinessCard';
 import Filter from '../components/Filter';
 import SearchBar from '../components/SearchBar';
+import ScrollFloat from '../components/ScrollFloat/ScrollFloat';
 import { Spinner } from '../components/Loading';
 import businessService from '../services/businessService';
 import { Store, ShieldCheck } from 'lucide-react';
@@ -72,9 +73,18 @@ const Businesses = () => {
         <span className="badge badge-success" style={{ marginBottom: '0.75rem' }}>
           <ShieldCheck size={13} /> Vetted Neighborhood Merchants
         </span>
-        <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem' }}>
+        <ScrollFloat
+          as="h1"
+          animationDuration={0.9}
+          ease="back.out(1.7)"
+          scrollStart="top 85%"
+          scrollEnd="bottom 55%"
+          stagger={0.025}
+          textClassName="nearnest-scroll-heading"
+          style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem' }}
+        >
           Local Business Directory
-        </h1>
+        </ScrollFloat>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem' }}>
           Discover trusted local shops, dining hotspots, wellness clinics, and skilled local service providers.
         </p>

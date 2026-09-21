@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import OfferCard from '../components/OfferCard';
 import Filter from '../components/Filter';
 import SearchBar from '../components/SearchBar';
+import ScrollFloat from '../components/ScrollFloat/ScrollFloat';
 import { Spinner } from '../components/Loading';
 import offerService from '../services/offerService';
 import { Tag, Sparkles } from 'lucide-react';
@@ -76,9 +77,18 @@ const Offers = () => {
         <span className="badge badge-primary" style={{ marginBottom: '0.75rem' }}>
           <Sparkles size={13} /> Real-Time Local Promotions
         </span>
-        <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem' }}>
+        <ScrollFloat
+          as="h1"
+          animationDuration={0.9}
+          ease="back.out(1.7)"
+          scrollStart="top 85%"
+          scrollEnd="bottom 55%"
+          stagger={0.025}
+          textClassName="nearnest-scroll-heading"
+          style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem' }}
+        >
           Explore Verified Community Deals
-        </h1>
+        </ScrollFloat>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem' }}>
           Browse coupons, discounts, BOGO specials, and flash promotions from top-rated local merchants.
         </p>

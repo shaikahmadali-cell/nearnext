@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import OfferCard from '../components/OfferCard';
 import BusinessCard from '../components/BusinessCard';
+import ScrollFloat from '../components/ScrollFloat/ScrollFloat';
 import { Spinner } from '../components/Loading';
 import offerService from '../services/offerService';
 import businessService from '../services/businessService';
@@ -189,7 +190,17 @@ const Home = () => {
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>Browse Categories</span>
-            <h2 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800 }}>Explore Local Industry Sectors</h2>
+            <ScrollFloat
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              textClassName="nearnest-scroll-heading"
+              style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800 }}
+            >
+              Explore Local Industry Sectors
+            </ScrollFloat>
           </div>
           <Link to="/offers" style={{ color: '#0ea5e9', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.95rem' }}>
             All Deals <ArrowRight size={16} />
@@ -257,9 +268,17 @@ const Home = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#f43f5e', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               <Flame size={16} /> Hot Discounts Right Now
             </div>
-            <h2 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800, marginTop: '0.35rem' }}>
+            <ScrollFloat
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              textClassName="nearnest-scroll-heading"
+              style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800, marginTop: '0.35rem' }}
+            >
               Trending Exclusive Promotions
-            </h2>
+            </ScrollFloat>
           </div>
           <Link to="/offers" className="btn btn-secondary btn-sm">
             View All Offers
@@ -289,7 +308,17 @@ const Home = () => {
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>Verified Partners</span>
-              <h2 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800 }}>Top Rated Local Businesses</h2>
+              <ScrollFloat
+                animationDuration={1}
+                ease="back.inOut(2)"
+                scrollStart="center bottom+=50%"
+                scrollEnd="bottom bottom-=40%"
+                stagger={0.03}
+                textClassName="nearnest-scroll-heading"
+                style={{ fontSize: 'clamp(1.4rem, 3vw, 1.85rem)', fontWeight: 800 }}
+              >
+                Top Rated Local Businesses
+              </ScrollFloat>
             </div>
             <Link to="/businesses" className="btn btn-secondary btn-sm">
               Explore All Businesses
@@ -331,9 +360,17 @@ const Home = () => {
         >
           <div>
             <span className="badge badge-primary" style={{ marginBottom: '0.75rem' }}>Are You a Business Owner?</span>
-            <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', fontWeight: 800, lineHeight: 1.2, marginBottom: '1rem' }}>
+            <ScrollFloat
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              textClassName="nearnest-scroll-heading"
+              style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', fontWeight: 800, lineHeight: 1.2, marginBottom: '1rem' }}
+            >
               Promote Your Business & Reach Thousands of Nearby Customers
-            </h2>
+            </ScrollFloat>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
               Create instant flash discounts, manage customer enquiries in one inbox, and track real-time footfall conversions with precision analytics.
             </p>
