@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import BusinessCard from '../components/BusinessCard';
 import Filter from '../components/Filter';
 import SearchBar from '../components/SearchBar';
@@ -7,18 +8,34 @@ import businessService from '../services/businessService';
 import { Store, ShieldCheck } from 'lucide-react';
 
 const Businesses = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState('All');
-  const [query, setQuery] = useState('');
-  const [sort, setSort] = useState('rating');
+
+  const initialSearch = searchParams.get('search') || '';
+  const initialLocation = searchParams.get('location') || '';
+  const initialCategory = searchParams.get('category') || 'All';
+  const initialSort = searchParams.get('sort') || 'rating';
+
+  const [category, setCategory] = useState(initialCategory);
+  const [query, setQuery] = useState(initialSearch);
+  const [location, setLocation] = useState(initialLocation);
+  const [sort, setSort] = useState(initialSort);
+
+  useEffect(() => {
+    const sQuery = searchParams.get('search') || '';
+    const sLoc = searchParams.get('location') || '';
+    setQuery(sQuery);
+    setLocation(sLoc);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
         setLoading(true);
         const params = {
-          search: query,
+          search: query || undefined,
+          location: location || undefined,
           category: category !== 'All' ? category : undefined,
           sort,
         };
@@ -34,10 +51,17 @@ const Businesses = () => {
     };
 
     fetchBusinesses();
-  }, [category, query, sort]);
+  }, [category, query, location, sort]);
 
-  const handleSearch = ({ query: q }) => {
+  const handleSearch = ({ query: q, location: loc }) => {
     setQuery(q);
+    setLocation(loc || '');
+    const newParams = new URLSearchParams(searchParams);
+    if (q) newParams.set('search', q);
+    else newParams.delete('search');
+    if (loc) newParams.set('location', loc);
+    else newParams.delete('location');
+    setSearchParams(newParams);
   };
 
   return (
@@ -58,7 +82,12 @@ const Businesses = () => {
 
       {/* Search Bar */}
       <div style={{ maxWidth: '800px', margin: '0 auto 2.5rem' }}>
-        <SearchBar onSearch={handleSearch} initialQuery={query} placeholder="Search business name, category, or keyword..." />
+        <SearchBar
+          onSearch={handleSearch}
+          initialQuery={query}
+          initialLocation={location}
+          placeholder="Search business name, category, or keyword..."
+        />
       </div>
 
       {/* Filter Component */}
@@ -83,6 +112,8 @@ const Businesses = () => {
             onClick={() => {
               setCategory('All');
               setQuery('');
+              setLocation('');
+              setSearchParams({});
             }}
             className="btn btn-secondary"
           >

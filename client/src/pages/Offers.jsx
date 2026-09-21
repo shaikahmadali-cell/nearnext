@@ -13,6 +13,7 @@ const Offers = () => {
   const [loading, setLoading] = useState(true);
 
   const initialSearch = searchParams.get('search') || '';
+  const initialLocation = searchParams.get('location') || '';
   const initialCategory = searchParams.get('category') || 'All';
   const initialSort = searchParams.get('sort') || 'newest';
   const initialDiscountType = searchParams.get('discountType') || 'All';
@@ -21,13 +22,23 @@ const Offers = () => {
   const [sort, setSort] = useState(initialSort);
   const [discountType, setDiscountType] = useState(initialDiscountType);
   const [query, setQuery] = useState(initialSearch);
+  const [location, setLocation] = useState(initialLocation);
+
+  useEffect(() => {
+    // Keep state in sync if searchParams change (e.g. back navigation or URL change)
+    const sQuery = searchParams.get('search') || '';
+    const sLoc = searchParams.get('location') || '';
+    setQuery(sQuery);
+    setLocation(sLoc);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchOffers = async () => {
       try {
         setLoading(true);
         const params = {
-          search: query,
+          search: query || undefined,
+          location: location || undefined,
           category: category !== 'All' ? category : undefined,
           discountType: discountType !== 'All' ? discountType : undefined,
           sort,
@@ -44,10 +55,17 @@ const Offers = () => {
     };
 
     fetchOffers();
-  }, [category, sort, discountType, query]);
+  }, [category, sort, discountType, query, location]);
 
-  const handleSearch = ({ query: q }) => {
+  const handleSearch = ({ query: q, location: loc }) => {
     setQuery(q);
+    setLocation(loc || '');
+    const newParams = new URLSearchParams(searchParams);
+    if (q) newParams.set('search', q);
+    else newParams.delete('search');
+    if (loc) newParams.set('location', loc);
+    else newParams.delete('location');
+    setSearchParams(newParams);
   };
 
   return (
@@ -68,7 +86,12 @@ const Offers = () => {
 
       {/* Search Bar */}
       <div style={{ maxWidth: '800px', margin: '0 auto 2.5rem' }}>
-        <SearchBar onSearch={handleSearch} initialQuery={query} placeholder="Search discount title, business, or code..." />
+        <SearchBar
+          onSearch={handleSearch}
+          initialQuery={query}
+          initialLocation={location}
+          placeholder="Search discount title, business, or code..."
+        />
       </div>
 
       {/* Filter Component */}
@@ -96,6 +119,8 @@ const Offers = () => {
               setCategory('All');
               setDiscountType('All');
               setQuery('');
+              setLocation('');
+              setSearchParams({});
             }}
             className="btn btn-secondary"
           >

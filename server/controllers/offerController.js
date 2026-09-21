@@ -8,15 +8,38 @@ const User = require('../models/User');
 // @access  Public
 const getOffers = async (req, res, next) => {
   try {
-    const { search, category, discountType, sort, featured } = req.query;
+    const { search, category, discountType, sort, featured, location } = req.query;
     const query = { status: { $in: ['approved', 'active'] } };
+    const andConditions = [];
 
     if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-        { promoCode: { $regex: search, $options: 'i' } },
-      ];
+      andConditions.push({
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { description: { $regex: search, $options: 'i' } },
+          { promoCode: { $regex: search, $options: 'i' } },
+        ],
+      });
+    }
+
+    if (location && location.trim() !== '') {
+      const parts = location.split(',').map((s) => s.trim()).filter(Boolean);
+      const locConditions = parts.flatMap((part) => [
+        { city: { $regex: part, $options: 'i' } },
+        { state: { $regex: part, $options: 'i' } },
+        { address: { $regex: part, $options: 'i' } },
+        { zipCode: { $regex: part, $options: 'i' } },
+      ]);
+
+      if (locConditions.length > 0) {
+        const matchingBusinesses = await Business.find({ $or: locConditions }).select('_id');
+        const businessIds = matchingBusinesses.map((b) => b._id);
+        andConditions.push({ business: { $in: businessIds } });
+      }
+    }
+
+    if (andConditions.length > 0) {
+      query.$and = andConditions;
     }
 
     if (category && category !== 'All') {

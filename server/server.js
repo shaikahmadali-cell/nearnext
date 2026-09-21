@@ -53,6 +53,7 @@ app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/analytics', require('./routes/analyticsRoutes'));
 app.use('/api/reviews', require('./routes/reviewRoutes'));
+app.use('/api/location', require('./routes/locationRoutes'));
 
 // 404 Route handler
 app.use((req, res, next) => {

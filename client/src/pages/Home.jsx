@@ -47,7 +47,10 @@ const Home = () => {
   }, []);
 
   const handleSearch = ({ query, location }) => {
-    navigate(`/offers?search=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}`);
+    const params = new URLSearchParams();
+    if (query) params.set('search', query);
+    if (location) params.set('location', location);
+    navigate(`/offers${params.toString() ? `?${params.toString()}` : ''}`);
   };
 
   const categories = [

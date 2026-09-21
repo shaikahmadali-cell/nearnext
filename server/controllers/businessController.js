@@ -6,23 +6,41 @@ const Offer = require('../models/Offer');
 // @access  Public
 const getBusinesses = async (req, res, next) => {
   try {
-    const { search, category, city, verified, sort } = req.query;
+    const { search, category, city, location, verified, sort } = req.query;
     const query = { status: 'approved' };
+    const andConditions = [];
 
     if (search) {
-      query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-        { address: { $regex: search, $options: 'i' } },
-      ];
+      andConditions.push({
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { description: { $regex: search, $options: 'i' } },
+          { address: { $regex: search, $options: 'i' } },
+        ],
+      });
+    }
+
+    const locFilter = location || (city !== 'All' ? city : undefined);
+    if (locFilter && locFilter.trim() !== '') {
+      const parts = locFilter.split(',').map((s) => s.trim()).filter(Boolean);
+      const locConditions = parts.flatMap((part) => [
+        { city: { $regex: part, $options: 'i' } },
+        { state: { $regex: part, $options: 'i' } },
+        { address: { $regex: part, $options: 'i' } },
+        { zipCode: { $regex: part, $options: 'i' } },
+      ]);
+
+      if (locConditions.length > 0) {
+        andConditions.push({ $or: locConditions });
+      }
+    }
+
+    if (andConditions.length > 0) {
+      query.$and = andConditions;
     }
 
     if (category && category !== 'All') {
       query.category = category;
-    }
-
-    if (city && city !== 'All') {
-      query.city = { $regex: city, $options: 'i' };
     }
 
     if (verified === 'true') {
