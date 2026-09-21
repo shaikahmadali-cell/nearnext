@@ -6,6 +6,7 @@ import BusinessCard from '../components/BusinessCard';
 import { Spinner } from '../components/Loading';
 import offerService from '../services/offerService';
 import businessService from '../services/businessService';
+import analyticsService from '../services/analyticsService';
 import {
   Sparkles,
   TrendingUp,
@@ -23,23 +24,42 @@ const Home = () => {
   const navigate = useNavigate();
   const [featuredOffers, setFeaturedOffers] = useState([]);
   const [topBusinesses, setTopBusinesses] = useState([]);
+  const [stats, setStats] = useState({
+    businessCount: null,
+    promotionCount: null,
+    customerSavingsFormatted: null,
+    customerSavings: null,
+    averageRating: null,
+    totalReviews: 0,
+    categoryCounts: {},
+  });
   const [loading, setLoading] = useState(true);
+  const [statsLoading, setStatsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [offersRes, businessRes] = await Promise.all([
+        setStatsLoading(true);
+        const [offersRes, businessRes, statsRes] = await Promise.all([
           offerService.getOffers({ sort: 'popular' }),
           businessService.getBusinesses({ sort: 'rating' }),
+          analyticsService.getPublicStats().catch((err) => {
+            console.error('Error fetching public stats:', err);
+            return { success: false };
+          }),
         ]);
 
-        if (offersRes.success) setFeaturedOffers(offersRes.data.slice(0, 6));
-        if (businessRes.success) setTopBusinesses(businessRes.data.slice(0, 4));
+        if (offersRes?.success) setFeaturedOffers(offersRes.data.slice(0, 6));
+        if (businessRes?.success) setTopBusinesses(businessRes.data.slice(0, 4));
+        if (statsRes?.success && statsRes?.data) {
+          setStats(statsRes.data);
+        }
       } catch (err) {
         console.error('Home data load error:', err);
       } finally {
         setLoading(false);
+        setStatsLoading(false);
       }
     };
 
@@ -54,12 +74,12 @@ const Home = () => {
   };
 
   const categories = [
-    { name: 'Dining & Cafes', count: '45+ Deals', icon: '🍕', color: '#0ea5e9' },
-    { name: 'Beauty & Spa', count: '28+ Deals', icon: '✨', color: '#38bdf8' },
-    { name: 'Fitness & Sports', count: '19+ Deals', icon: '⚡', color: '#0284c7' },
-    { name: 'Retail & Shopping', count: '52+ Deals', icon: '🛍️', color: '#0ea5e9' },
-    { name: 'Automotive & Repairs', count: '14+ Deals', icon: '🚗', color: '#38bdf8' },
-    { name: 'Entertainment & Events', count: '23+ Deals', icon: '🎉', color: '#0284c7' },
+    { name: 'Dining & Cafes', icon: '🍕', color: '#0ea5e9' },
+    { name: 'Beauty & Spa', icon: '✨', color: '#38bdf8' },
+    { name: 'Fitness & Sports', icon: '⚡', color: '#0284c7' },
+    { name: 'Retail & Shopping', icon: '🛍️', color: '#0ea5e9' },
+    { name: 'Automotive & Repairs', icon: '🚗', color: '#38bdf8' },
+    { name: 'Entertainment & Events', icon: '🎉', color: '#0284c7' },
   ];
 
   return (
@@ -92,7 +112,7 @@ const Home = () => {
             whiteSpace: 'normal',
           }}>
             <Sparkles size={16} color="#0ea5e9" style={{ flexShrink: 0 }} />
-            <span>Discover Top Neighborhood Deals & Save Up To 70%</span>
+            <span>Discover Top Neighborhood Deals & Verified Local Merchants</span>
           </div>
 
           {/* Heading */}
@@ -123,7 +143,7 @@ const Home = () => {
             <SearchBar onSearch={handleSearch} />
           </div>
 
-          {/* Micro Stats Counter */}
+          {/* Real-Time Database Micro Stats Counter */}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -135,20 +155,30 @@ const Home = () => {
             borderTop: '1px solid var(--border-glass)',
           }}>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)' }}>500+</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)' }}>
+                {statsLoading ? '—' : (stats.businessCount !== null ? stats.businessCount : '—')}
+              </div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Local Businesses</div>
             </div>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0ea5e9' }}>$120K+</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0ea5e9' }}>
+                {statsLoading ? '—' : (stats.customerSavingsFormatted || (stats.customerSavings !== null ? `₹${stats.customerSavings}` : '—'))}
+              </div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Customer Savings</div>
             </div>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#38bdf8' }}>1,400+</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#38bdf8' }}>
+                {statsLoading ? '—' : (stats.promotionCount !== null ? stats.promotionCount : '—')}
+              </div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Verified Promotions</div>
             </div>
             <div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0284c7' }}>4.9 ★</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Average Satisfaction</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0284c7' }}>
+                {statsLoading ? '—' : (stats.averageRating ? `${stats.averageRating} ★` : (stats.totalReviews === 0 ? 'No ratings yet' : '—'))}
+              </div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                {stats.averageRating ? 'Average Rating' : 'Community Satisfaction'}
+              </div>
             </div>
           </div>
         </div>
@@ -167,49 +197,56 @@ const Home = () => {
         </div>
 
         <div className="grid-cols-3">
-          {categories.map((c, i) => (
-            <Link
-              key={i}
-              to={`/offers?category=${encodeURIComponent(c.name)}`}
-              className="glass-panel"
-              style={{
-                padding: '1.25rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-                transition: 'transform var(--transition-base), border-color var(--transition-base)',
-                textDecoration: 'none',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.borderColor = 'var(--border-glass)';
-              }}
-            >
-              <div style={{
-                fontSize: '1.8rem',
-                width: '48px',
-                height: '48px',
-                borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.05)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}>
-                {c.icon}
-              </div>
-              <div style={{ minWidth: 0, flex: 1 }}>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {c.name}
-                </h3>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{c.count}</span>
-              </div>
-            </Link>
-          ))}
+          {categories.map((c, i) => {
+            const count = stats.categoryCounts?.[c.name] ?? 0;
+            const countText = statsLoading
+              ? 'Loading deals...'
+              : `${count} ${count === 1 ? 'Deal' : 'Deals'}`;
+
+            return (
+              <Link
+                key={i}
+                to={`/offers?category=${encodeURIComponent(c.name)}`}
+                className="glass-panel"
+                style={{
+                  padding: '1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  transition: 'transform var(--transition-base), border-color var(--transition-base)',
+                  textDecoration: 'none',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = 'var(--border-glass)';
+                }}
+              >
+                <div style={{
+                  fontSize: '1.8rem',
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: 'var(--radius-md)',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  {c.icon}
+                </div>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {c.name}
+                  </h3>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{countText}</span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -231,6 +268,12 @@ const Home = () => {
 
         {loading ? (
           <Spinner text="Loading hot deals..." />
+        ) : featuredOffers.length === 0 ? (
+          <div className="glass-panel" style={{ textAlign: 'center', padding: '3rem 2rem', borderRadius: 'var(--radius-lg)' }}>
+            <Tag size={40} color="#0ea5e9" style={{ margin: '0 auto 0.75rem', opacity: 0.8 }} />
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.5rem' }}>No deals available yet</h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Check back soon for new local promotions and discounts.</p>
+          </div>
         ) : (
           <div className="grid-cols-3">
             {featuredOffers.map((offer) => (
@@ -253,11 +296,21 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="grid-cols-4">
-            {topBusinesses.map((b) => (
-              <BusinessCard key={b._id} business={b} />
-            ))}
-          </div>
+          {loading ? (
+            <Spinner text="Loading local businesses..." />
+          ) : topBusinesses.length === 0 ? (
+            <div className="glass-panel" style={{ textAlign: 'center', padding: '3rem 2rem', borderRadius: 'var(--radius-lg)' }}>
+              <Store size={40} color="#0ea5e9" style={{ margin: '0 auto 0.75rem', opacity: 0.8 }} />
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.5rem' }}>No local businesses available yet</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Local merchants are registering their storefronts. Check back soon!</p>
+            </div>
+          ) : (
+            <div className="grid-cols-4">
+              {topBusinesses.map((b) => (
+                <BusinessCard key={b._id} business={b} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

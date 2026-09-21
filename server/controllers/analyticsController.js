@@ -2,6 +2,91 @@ const User = require('../models/User');
 const Business = require('../models/Business');
 const Offer = require('../models/Offer');
 const Enquiry = require('../models/Enquiry');
+const Review = require('../models/Review');
+const SavedOffer = require('../models/SavedOffer');
+
+// @desc    Get platform-wide public statistics for homepage
+// @route   GET /api/analytics/public-stats
+// @access  Public
+const getPublicStats = async (req, res, next) => {
+  try {
+    const businessCount = await Business.countDocuments({ status: 'approved' });
+    const promotionCount = await Offer.countDocuments({ status: { $in: ['approved', 'active'] } });
+
+    // Calculate real customer savings from active/approved offers & saved deals
+    const offers = await Offer.find({ status: { $in: ['approved', 'active'] } });
+    let totalSavingsAmount = 0;
+    offers.forEach((o) => {
+      const orig = Number(o.originalPrice) || 0;
+      const disc = Number(o.discountedPrice) || 0;
+      if (orig > disc) {
+        const diff = orig - disc;
+        const saves = Number(o.savesCount) || 0;
+        totalSavingsAmount += diff * Math.max(1, saves);
+      }
+    });
+
+    // Calculate real average rating from Review collection or Business ratings
+    const reviewStats = await Review.aggregate([
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: '$rating' },
+          totalReviews: { $sum: 1 },
+        },
+      },
+    ]);
+
+    let averageRating = null;
+    let totalReviews = 0;
+    if (reviewStats.length > 0 && reviewStats[0].totalReviews > 0) {
+      averageRating = Math.round(reviewStats[0].avgRating * 10) / 10;
+      totalReviews = reviewStats[0].totalReviews;
+    } else {
+      const businessStats = await Business.aggregate([
+        { $match: { status: 'approved', numReviews: { $gt: 0 }, rating: { $gt: 0 } } },
+        {
+          $group: {
+            _id: null,
+            avgRating: { $avg: '$rating' },
+            totalReviews: { $sum: '$numReviews' },
+          },
+        },
+      ]);
+      if (businessStats.length > 0 && businessStats[0].totalReviews > 0) {
+        averageRating = Math.round(businessStats[0].avgRating * 10) / 10;
+        totalReviews = businessStats[0].totalReviews;
+      }
+    }
+
+    // Real category offer counts
+    const categoryAgg = await Offer.aggregate([
+      { $match: { status: { $in: ['approved', 'active'] } } },
+      { $group: { _id: '$category', count: { $sum: 1 } } },
+    ]);
+    const categoryCounts = {};
+    categoryAgg.forEach((item) => {
+      if (item._id) {
+        categoryCounts[item._id] = item.count;
+      }
+    });
+
+    res.json({
+      success: true,
+      data: {
+        businessCount,
+        promotionCount,
+        customerSavings: totalSavingsAmount,
+        customerSavingsFormatted: totalSavingsAmount > 0 ? `₹${totalSavingsAmount.toLocaleString('en-IN')}` : '₹0',
+        averageRating,
+        totalReviews,
+        categoryCounts,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // @desc    Get analytics for business owner
 // @route   GET /api/analytics/business
@@ -130,6 +215,7 @@ const getAdminAnalytics = async (req, res, next) => {
 };
 
 module.exports = {
+  getPublicStats,
   getBusinessAnalytics,
   getAdminAnalytics,
 };
